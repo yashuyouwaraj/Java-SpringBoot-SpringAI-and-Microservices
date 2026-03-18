@@ -1,4 +1,4 @@
-class Calculator
+class Calculator2
 {
 	int num=5;
 	public int add(int n1, int n2)
@@ -10,9 +10,9 @@ class Calculator
 
 public class Stack_and_Heap {
     public static void main(String[] args) {
-        int data=10;
-        Calculator objCalculator = new Calculator();
-        Calculator objCalculator2 = new Calculator();
+
+        Calculator2 objCalculator = new Calculator2();
+        Calculator2 objCalculator2 = new Calculator2();
         int result = objCalculator.add(10, 20);
         System.out.println("The sum of 10 and 20 is: "+result);
         objCalculator.num=15;
