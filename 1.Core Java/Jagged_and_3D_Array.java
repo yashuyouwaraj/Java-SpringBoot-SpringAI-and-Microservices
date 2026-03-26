@@ -5,8 +5,8 @@ public class Jagged_and_3D_Array {
         nums[1]=new int[4];
         nums[2]=new int[2];
 
-        int nums1[][]=new int[3][4];
-        int nums2[][][]=new int[2][3][4]; //three dimensional array
+        // int nums1[][]=new int[3][4];
+        // int nums2[][][]=new int[2][3][4]; //three dimensional array
 
         for(int i=0;i<nums.length;i++){
             for(int j=0;j<nums[i].length;j++){
