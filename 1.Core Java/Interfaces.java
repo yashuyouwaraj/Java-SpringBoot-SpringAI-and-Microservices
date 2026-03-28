@@ -8,7 +8,6 @@ interface A12 {
 }
 
 class B12 implements A12 {
-
     @Override
     public void show() {
         System.out.println("in show");
@@ -30,3 +29,12 @@ public class Interfaces {
         System.out.println(A12.name);
     }
 }
+
+
+// Types of Interface:-
+// 1. Normal interface
+// 	- an interface having two or more methods
+// 2. Functional interface (SAM)
+// 	- SAM => Single Abstract Method interface
+// 3. Marker interface
+// 	- an interface that as no methods (blank interface)
