@@ -1,21 +1,21 @@
-interface Computer {
+interface Computer1 {
     void code();
 }
 
-class Laptop implements Computer{
+class Laptop1 implements Computer1{
     public void code(){
         System.out.println("Code, Compile, Run");
     }
 }
 
-class Desktop implements Computer{
+class Desktop1 implements Computer1{
     public void code(){
         System.out.println("Code, Compile, Run: Faster than Laptop");
     }
 }
 
 class Developer{
-    public void devApp(Computer lap){
+    public void devApp(Computer1 lap){
         lap.code();
     }
 }
@@ -23,8 +23,8 @@ class Developer{
 public class NeedForInterfaces {
     public static void main(String[] args) {
 
-        Computer lap = new Laptop();
-        Computer desk = new Desktop();
+        Computer1 lap = new Laptop1();
+        Computer1 desk = new Desktop1();
 
         Developer dev = new Developer();
         dev.devApp(lap);
