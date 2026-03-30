@@ -3,11 +3,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-class Student {
+class Student4 {
     int age;
     String name;
 
-    public Student(int age, String name) {
+    public Student4(int age, String name) {
         this.age = age;
         this.name = name;
     }
@@ -47,17 +47,17 @@ public class ComparatorDemo {
         //     }
         // };
 
-        Comparator<Student> com1 = (i,j)-> i.age > j.age ? 1 : -1; // Using lambda expression to simplify the code
+        Comparator<Student4> com1 = (i,j)-> i.age > j.age ? 1 : -1; // Using lambda expression to simplify the code
 
-        List<Student> studs= new ArrayList<>();
-    	studs.add(new Student(21,"Yashu"));
-    	studs.add(new Student(12,"John"));
-    	studs.add(new Student(18,"Parul"));
-    	studs.add(new Student(20,"Kiran"));
+        List<Student4> studs= new ArrayList<>();
+    	studs.add(new Student4(21,"Yashu"));
+    	studs.add(new Student4(12,"John"));
+    	studs.add(new Student4(18,"Parul"));
+    	studs.add(new Student4(20,"Kiran"));
     	Collections.sort(studs, com1);
     	// System.out.println(studs);
 
-        for(Student s: studs){
+        for(Student4 s: studs){
             System.out.println(s);
         }
 
