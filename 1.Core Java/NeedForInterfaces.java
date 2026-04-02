@@ -2,7 +2,7 @@ interface Computer1 {
     void code();
 }
 
-class Laptop1 implements Computer1{
+class LaptopComputer1 implements Computer1{
     public void code(){
         System.out.println("Code, Compile, Run");
     }
@@ -23,7 +23,7 @@ class Developer{
 public class NeedForInterfaces {
     public static void main(String[] args) {
 
-        Computer1 lap = new Laptop1();
+        Computer1 lap = new LaptopComputer1();
         Computer1 desk = new Desktop1();
 
         Developer dev = new Developer();

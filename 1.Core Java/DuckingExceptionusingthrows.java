@@ -5,7 +5,7 @@ class YashuException extends Exception {
 	}
 }
 
-class A20 {
+class ThrowingLoader {
 	public void show() throws ClassNotFoundException {
 		// try
 		// {
@@ -36,7 +36,7 @@ public class DuckingExceptionusingthrows {
 		// System.out.println("Not able to find theh class");
 		// }
 
-		A20 obj = new A20();
+		ThrowingLoader obj = new ThrowingLoader();
 		try {
 			obj.show();
 		} catch (ClassNotFoundException e) {

@@ -14,7 +14,7 @@ interface A19{
 }
 
 @FunctionalInterface
-interface A20{
+interface A20Adder{
     int add(int i, int j);
 }
 
@@ -30,7 +30,7 @@ public class LambdaExpression {
         A19 obj2 = (i, j) -> System.out.println("in show2 : " + i + " & " + j);
         obj2.show2(5, 10);
 
-        A20 obj3 = (i,j)-> i+j;
+        A20Adder obj3 = (i,j)-> i+j;
         System.out.println("in add: " + obj3.add(5,10));
     }
 }

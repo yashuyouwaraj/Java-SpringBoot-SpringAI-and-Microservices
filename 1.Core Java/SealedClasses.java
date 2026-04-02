@@ -14,11 +14,11 @@ class Square extends Circle{
 
 }
 
-sealed interface Vehicle permits Car{
+sealed interface Vehicle permits VehicleCar{
 
 }
 
-non-sealed interface Car extends Vehicle{
+non-sealed interface VehicleCar extends Vehicle{
 
 }
 

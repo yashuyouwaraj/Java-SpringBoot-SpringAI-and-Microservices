@@ -1,5 +1,5 @@
-class A {
-    public A(){
+class AnonymousA {
+    public AnonymousA(){
         System.out.println("object created");
     }
     public void show(){
@@ -11,7 +11,7 @@ class A {
 
 public class AnonymousObjects {
     public static void main(String[] args) {
-        new A();  //Anonymous object
-        new A().show();  //Anonymous object
+        new AnonymousA();  //Anonymous object
+        new AnonymousA().show();  //Anonymous object
     }
 }

@@ -1,4 +1,4 @@
-class Alien{
+class LocalAlien{
     
 }
 public class LocalTypeInference {
@@ -11,6 +11,6 @@ public class LocalTypeInference {
         int nums[] = new int[10];
         var nums2 = new int[10];  //Local type inference
 
-        var obj = new Alien();
+        var obj = new LocalAlien();
     }
 }

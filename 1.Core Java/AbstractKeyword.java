@@ -1,4 +1,4 @@
-abstract class Car {
+abstract class AbstractCar {
     public abstract void drive();
 
     public abstract void fly();
@@ -8,7 +8,7 @@ abstract class Car {
     }
 }
 
-abstract class WagnoR extends Car {
+abstract class WagnoR extends AbstractCar {
     public void drive() {
         System.out.println("Driving WagnoR");
     }
@@ -26,9 +26,9 @@ class UpdatedWagnoR extends WagnoR { //concrete class
 
 public class AbstractKeyword {
     public static void main(String[] args) {
-        // Car obj=new Car();
-        // Car obj=new WagnoR();
-        Car car = new UpdatedWagnoR();
+        // AbstractCar obj=new AbstractCar();
+        // AbstractCar obj=new WagnoR();
+        AbstractCar car = new UpdatedWagnoR();
         car.drive();
         car.fly();
         car.playMusic();
