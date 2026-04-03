@@ -1,0 +1,1420 @@
+===============================================================================
+                    GIT CHEAT NOTE - THEORY + EXAMPLES
+===============================================================================
+
+This note is designed for revision.
+It explains Git from beginner level to practical daily usage with short
+examples so commands are easier to understand and remember.
+
+
+===============================================================================
+1. WHAT IS GIT
+===============================================================================
+
+Theory:
+Git is a distributed version control system.
+It helps track changes in files, manage project history, and collaborate with
+other developers.
+
+Git is used for:
+- tracking code changes
+- going back to older versions
+- working safely with branches
+- collaborating with teams
+- syncing code with GitHub, GitLab, or Bitbucket
+
+Important idea:
+Git tracks snapshots of your project over time, not just single file changes.
+
+
+===============================================================================
+2. WHY WE USE GIT
+===============================================================================
+
+Theory:
+Without Git, it becomes hard to manage:
+- old versions of code
+- multiple developers working together
+- feature experimentation
+- bug fixing safely
+
+Benefits:
+- keeps project history
+- supports branching and merging
+- allows backup using remote repositories
+- makes collaboration easier
+- helps understand who changed what and when
+
+
+===============================================================================
+3. GIT VS GITHUB
+===============================================================================
+
+Theory:
+Many beginners think Git and GitHub are the same, but they are different.
+
+Git:
+- tool installed on your computer
+- used to track versions locally
+
+GitHub:
+- cloud platform that hosts Git repositories online
+- used for backup, collaboration, pull requests, code review
+
+Other remote hosting platforms:
+- GitLab
+- Bitbucket
+
+
+===============================================================================
+4. INSTALLING GIT
+===============================================================================
+
+Theory:
+Before using Git, install it on your system.
+
+Windows:
+1. Download Git from the official website
+2. Install Git
+3. Open Git Bash, Command Prompt, or terminal
+4. Check installation
+
+Command:
+
+```bash
+git --version
+```
+
+Example output:
+
+```bash
+git version 2.x.x
+```
+
+If this works, Git is installed correctly.
+
+
+===============================================================================
+5. FIRST-TIME GIT SETUP
+===============================================================================
+
+Theory:
+After installation, set your identity.
+This name and email appear in your commits.
+
+Set username:
+
+```bash
+git config --global user.name "Your Name"
+```
+
+Set email:
+
+```bash
+git config --global user.email "you@example.com"
+```
+
+Set default branch name:
+
+```bash
+git config --global init.defaultBranch main
+```
+
+Check your config:
+
+```bash
+git config --list
+```
+
+Theory point:
+- `--global` means the setting applies to all repositories for your user
+- without `--global`, the config is only for the current repository
+
+
+===============================================================================
+6. IMPORTANT GIT TERMS
+===============================================================================
+
+Theory:
+
+Repository or repo:
+- project folder tracked by Git
+
+Commit:
+- saved snapshot of your project
+
+Branch:
+- separate line of development
+
+Main or master:
+- primary branch of the project
+
+Remote:
+- online copy of the repository
+
+Clone:
+- download a remote repository to your system
+
+Pull:
+- fetch and merge latest changes from remote
+
+Push:
+- upload your local commits to remote
+
+Stage:
+- prepare selected changes for next commit
+
+Working directory:
+- actual files you are editing
+
+Staging area:
+- area where selected changes are kept before commit
+
+
+===============================================================================
+7. CREATING A NEW GIT REPOSITORY
+===============================================================================
+
+Theory:
+If you already have a project folder and want Git to track it, initialize it.
+
+Command:
+
+```bash
+git init
+```
+
+What it does:
+- creates a hidden `.git` folder
+- turns the current folder into a Git repository
+
+Example flow:
+
+```bash
+mkdir my-project
+cd my-project
+git init
+```
+
+
+===============================================================================
+8. CLONING AN EXISTING REPOSITORY
+===============================================================================
+
+Theory:
+If a repository already exists on GitHub or another remote platform, use
+`clone` instead of `init`.
+
+Command:
+
+```bash
+git clone <repository-url>
+```
+
+Example:
+
+```bash
+git clone https://github.com/user/project.git
+```
+
+What it does:
+- downloads the project
+- creates a local folder
+- connects your local repo to the remote automatically
+
+Clone into a custom folder name:
+
+```bash
+git clone https://github.com/user/project.git myfolder
+```
+
+
+===============================================================================
+9. CHECKING REPOSITORY STATUS
+===============================================================================
+
+Theory:
+The most commonly used Git command is `status`.
+It shows what has changed.
+
+Command:
+
+```bash
+git status
+```
+
+It tells you:
+- current branch name
+- modified files
+- untracked files
+- staged files
+- whether your branch is ahead or behind remote
+
+
+===============================================================================
+10. TRACKED VS UNTRACKED FILES
+===============================================================================
+
+Theory:
+
+Untracked file:
+- file Git does not know yet
+
+Tracked file:
+- file Git is already monitoring
+
+To start tracking a file, add it to staging.
+
+Example:
+
+```bash
+git add notes.txt
+```
+
+
+===============================================================================
+11. STAGING CHANGES
+===============================================================================
+
+Theory:
+Before commit, Git asks you to choose which changes should be included.
+This is called staging.
+
+Stage one file:
+
+```bash
+git add file.txt
+```
+
+Stage multiple files:
+
+```bash
+git add file1.txt file2.txt
+```
+
+Stage all current changes:
+
+```bash
+git add .
+```
+
+Theory point:
+- `git add .` stages new, modified, and deleted files in the current path
+
+
+===============================================================================
+12. MAKING A COMMIT
+===============================================================================
+
+Theory:
+A commit saves a snapshot of staged changes.
+
+Command:
+
+```bash
+git commit -m "Add login feature"
+```
+
+What it does:
+- saves staged changes into project history
+- adds a message describing the work
+
+Good commit message style:
+- short
+- meaningful
+- action-based
+
+Examples:
+- `Add user registration form`
+- `Fix null pointer issue in service`
+- `Update README with setup steps`
+
+
+===============================================================================
+13. BASIC GIT WORKFLOW
+===============================================================================
+
+Theory:
+The daily local workflow is usually:
+
+1. Edit files
+2. Check changes
+3. Stage changes
+4. Commit changes
+
+Example:
+
+```bash
+git status
+git add .
+git commit -m "Implement search feature"
+```
+
+
+===============================================================================
+14. VIEWING COMMIT HISTORY
+===============================================================================
+
+Theory:
+Git stores complete commit history.
+
+Show history:
+
+```bash
+git log
+```
+
+Compact history:
+
+```bash
+git log --oneline
+```
+
+Graph view:
+
+```bash
+git log --oneline --graph --all
+```
+
+Useful when:
+- checking old commits
+- finding commit id
+- understanding branch history
+
+
+===============================================================================
+15. SEEING FILE DIFFERENCES
+===============================================================================
+
+Theory:
+Git can show what changed before or after staging.
+
+Show unstaged changes:
+
+```bash
+git diff
+```
+
+Show staged changes:
+
+```bash
+git diff --staged
+```
+
+Useful when:
+- reviewing code before commit
+- checking accidental changes
+
+
+===============================================================================
+16. RENAMING AND DELETING FILES
+===============================================================================
+
+Theory:
+Git can track rename and delete operations.
+
+Rename a file:
+
+```bash
+git mv old.txt new.txt
+```
+
+Delete a file:
+
+```bash
+git rm file.txt
+```
+
+After this, commit the changes.
+
+
+===============================================================================
+17. IGNORING FILES WITH GITIGNORE
+===============================================================================
+
+Theory:
+Some files should not be tracked, such as:
+- build output
+- temporary files
+- log files
+- IDE folders
+- secret configuration files
+
+These are added to `.gitignore`.
+
+Example `.gitignore`:
+
+```gitignore
+target/
+build/
+*.class
+*.log
+.idea/
+.vscode/
+.env
+```
+
+Theory point:
+If a file is already tracked, adding it to `.gitignore` later will not
+automatically stop Git from tracking it.
+
+
+===============================================================================
+18. CHECKING BRANCHES
+===============================================================================
+
+Theory:
+Branches help work on features separately without disturbing main code.
+
+Show branches:
+
+```bash
+git branch
+```
+
+Current branch has `*` symbol next to it.
+
+Show remote branches too:
+
+```bash
+git branch -a
+```
+
+
+===============================================================================
+19. CREATING AND SWITCHING BRANCHES
+===============================================================================
+
+Theory:
+Create a new branch when starting new work like a feature or bug fix.
+
+Create branch:
+
+```bash
+git branch feature-login
+```
+
+Switch branch:
+
+```bash
+git checkout feature-login
+```
+
+Create and switch in one command:
+
+```bash
+git checkout -b feature-login
+```
+
+Modern alternative:
+
+```bash
+git switch -c feature-login
+```
+
+
+===============================================================================
+20. MERGING BRANCHES
+===============================================================================
+
+Theory:
+Merging combines changes from one branch into another.
+
+Example:
+Suppose you want to merge `feature-login` into `main`.
+
+Steps:
+1. Switch to `main`
+2. Merge feature branch
+
+Commands:
+
+```bash
+git checkout main
+git merge feature-login
+```
+
+If there is no conflict, Git merges automatically.
+
+
+===============================================================================
+21. MERGE CONFLICT
+===============================================================================
+
+Theory:
+A merge conflict happens when Git cannot automatically decide which version
+of code to keep.
+
+Usually happens when:
+- same file is changed in two branches
+- same lines are edited differently
+
+Conflict markers look like:
+
+```text
+<<<<<<< HEAD
+current branch code
+=======
+incoming branch code
+>>>>>>> feature-login
+```
+
+How to solve:
+1. Open the file
+2. Keep correct code
+3. Remove conflict markers
+4. Stage the resolved file
+5. Commit the merge
+
+Commands:
+
+```bash
+git add file.txt
+git commit -m "Resolve merge conflict"
+```
+
+
+===============================================================================
+22. WHAT IS HEAD
+===============================================================================
+
+Theory:
+`HEAD` is a pointer to the current commit you are working on.
+
+Usually:
+- `HEAD` points to the latest commit of the current branch
+
+You will often see `HEAD` in commands like:
+
+```bash
+git show HEAD
+git reset --soft HEAD~1
+```
+
+Meaning:
+- `HEAD~1` means one commit before current commit
+
+
+===============================================================================
+23. CONNECTING LOCAL REPO TO REMOTE
+===============================================================================
+
+Theory:
+If you created a repository locally and then created an empty repo on GitHub,
+connect both using `remote add`.
+
+Command:
+
+```bash
+git remote add origin <repository-url>
+```
+
+Example:
+
+```bash
+git remote add origin https://github.com/user/project.git
+```
+
+Check remotes:
+
+```bash
+git remote -v
+```
+
+`origin` is the common default name for the main remote repository.
+
+
+===============================================================================
+24. PUSHING CODE TO REMOTE
+===============================================================================
+
+Theory:
+`push` uploads your local commits to the remote repository.
+
+First push:
+
+```bash
+git push -u origin main
+```
+
+Later pushes:
+
+```bash
+git push
+```
+
+Theory point:
+- `-u` sets upstream tracking so future `git push` and `git pull` become easier
+
+
+===============================================================================
+25. PULLING LATEST CHANGES
+===============================================================================
+
+Theory:
+`pull` brings remote changes to your local repository.
+
+Command:
+
+```bash
+git pull
+```
+
+What it does:
+- fetches latest changes
+- merges them into current branch
+
+Useful before starting work and before pushing.
+
+
+===============================================================================
+26. FETCH VS PULL
+===============================================================================
+
+Theory:
+Many beginners confuse `fetch` and `pull`.
+
+`git fetch`:
+- downloads latest remote updates
+- does not merge into your current branch
+
+`git pull`:
+- downloads updates
+- also merges them into current branch
+
+Commands:
+
+```bash
+git fetch
+git pull
+```
+
+Use `fetch` when you want to inspect changes first.
+
+
+===============================================================================
+27. CLONE, PULL, PUSH FULL FLOW
+===============================================================================
+
+Theory:
+This is one of the most practical real-world flows.
+
+If project already exists online:
+
+```bash
+git clone https://github.com/user/project.git
+cd project
+git pull
+git add .
+git commit -m "Do some work"
+git push
+```
+
+Meaning:
+- `clone` gets the project first time
+- `pull` gets latest updates
+- `add` stages your changes
+- `commit` saves them locally
+- `push` uploads them
+
+
+===============================================================================
+28. SEEING REMOTE INFORMATION
+===============================================================================
+
+Theory:
+To check remote repositories linked to your project:
+
+```bash
+git remote -v
+```
+
+To get more detail:
+
+```bash
+git remote show origin
+```
+
+Useful for:
+- verifying push URL
+- checking tracked branches
+
+
+===============================================================================
+29. CHECKING WHO CHANGED WHAT
+===============================================================================
+
+Theory:
+Git can show who modified each line.
+
+Command:
+
+```bash
+git blame file.txt
+```
+
+Useful when:
+- understanding old code
+- finding when a line was introduced
+- identifying commit and author
+
+
+===============================================================================
+30. SEEING DETAILS OF A COMMIT
+===============================================================================
+
+Theory:
+To inspect a specific commit:
+
+```bash
+git show <commit-id>
+```
+
+Example:
+
+```bash
+git show a1b2c3d
+```
+
+It shows:
+- author
+- date
+- commit message
+- code changes
+
+
+===============================================================================
+31. RESTORING FILE CHANGES
+===============================================================================
+
+Theory:
+Sometimes you change a file and want to discard the local modification.
+
+Restore unstaged changes:
+
+```bash
+git restore file.txt
+```
+
+Older alternative:
+
+```bash
+git checkout -- file.txt
+```
+
+Important:
+- this removes local uncommitted changes in that file
+
+
+===============================================================================
+32. UNSTAGING FILES
+===============================================================================
+
+Theory:
+If you accidentally staged a file, remove it from staging without deleting
+your actual edits.
+
+Command:
+
+```bash
+git restore --staged file.txt
+```
+
+Older alternative:
+
+```bash
+git reset file.txt
+```
+
+
+===============================================================================
+33. CHANGING THE LAST COMMIT
+===============================================================================
+
+Theory:
+If you just made a commit and want to update its message or include missed
+changes, use amend.
+
+Command:
+
+```bash
+git commit --amend
+```
+
+Example:
+
+```bash
+git add missed-file.txt
+git commit --amend
+```
+
+Use carefully if the old commit was already pushed.
+
+
+===============================================================================
+34. RESET BASICS
+===============================================================================
+
+Theory:
+`reset` moves branch pointers and can also affect staging and working files.
+It is powerful, so use it carefully.
+
+Soft reset:
+
+```bash
+git reset --soft HEAD~1
+```
+
+Meaning:
+- removes last commit
+- keeps changes staged
+
+Mixed reset:
+
+```bash
+git reset HEAD~1
+```
+
+Meaning:
+- removes last commit
+- keeps changes in working directory
+- unstages them
+
+Hard reset:
+
+```bash
+git reset --hard HEAD~1
+```
+
+Meaning:
+- removes last commit
+- removes staged changes
+- removes working directory changes
+
+Warning:
+Hard reset can delete uncommitted work.
+
+
+===============================================================================
+35. REVERT BASICS
+===============================================================================
+
+Theory:
+`revert` is safer than `reset` for shared history.
+It creates a new commit that undoes an older commit.
+
+Command:
+
+```bash
+git revert <commit-id>
+```
+
+Use when:
+- the commit was already pushed
+- you want safe history
+
+
+===============================================================================
+36. STASH
+===============================================================================
+
+Theory:
+`stash` temporarily saves your uncommitted changes so you can switch tasks.
+
+Save changes:
+
+```bash
+git stash
+```
+
+Save with message:
+
+```bash
+git stash push -m "half done navbar work"
+```
+
+See stash list:
+
+```bash
+git stash list
+```
+
+Apply latest stash:
+
+```bash
+git stash apply
+```
+
+Apply and remove stash:
+
+```bash
+git stash pop
+```
+
+
+===============================================================================
+37. TAGS
+===============================================================================
+
+Theory:
+Tags are used to mark important points in history such as releases.
+
+Create tag:
+
+```bash
+git tag v1.0
+```
+
+Annotated tag:
+
+```bash
+git tag -a v1.0 -m "First release"
+```
+
+Push tags:
+
+```bash
+git push origin v1.0
+```
+
+Push all tags:
+
+```bash
+git push --tags
+```
+
+
+===============================================================================
+38. BRANCH DELETION
+===============================================================================
+
+Theory:
+After merging a feature branch, you may delete it.
+
+Delete local branch:
+
+```bash
+git branch -d feature-login
+```
+
+Force delete local branch:
+
+```bash
+git branch -D feature-login
+```
+
+Delete remote branch:
+
+```bash
+git push origin --delete feature-login
+```
+
+
+===============================================================================
+39. REBASE BASICS
+===============================================================================
+
+Theory:
+Rebase rewrites commit base so history looks linear.
+
+Example:
+
+```bash
+git checkout feature-login
+git rebase main
+```
+
+Meaning:
+- feature branch commits are replayed on top of latest `main`
+
+Benefits:
+- cleaner history
+
+Risk:
+- do not casually rebase public shared commits
+
+
+===============================================================================
+40. CHERRY-PICK
+===============================================================================
+
+Theory:
+Cherry-pick copies a specific commit from one branch to another.
+
+Command:
+
+```bash
+git cherry-pick <commit-id>
+```
+
+Useful when:
+- you need one fix from another branch
+- you do not want full merge
+
+
+===============================================================================
+41. GIT WORKFLOW FOR SOLO PROJECT
+===============================================================================
+
+Theory:
+A simple solo workflow can be:
+
+1. `git pull`
+2. make changes
+3. `git status`
+4. `git add .`
+5. `git commit -m "meaningful message"`
+6. `git push`
+
+This is easy and practical for small projects.
+
+
+===============================================================================
+42. GIT WORKFLOW FOR TEAM PROJECT
+===============================================================================
+
+Theory:
+A common team workflow is:
+
+1. pull latest `main`
+2. create a new feature branch
+3. do work and commit regularly
+4. push feature branch
+5. create pull request
+6. review and merge into `main`
+
+Example:
+
+```bash
+git checkout main
+git pull
+git checkout -b feature-payment
+```
+
+
+===============================================================================
+43. PULL REQUEST CONCEPT
+===============================================================================
+
+Theory:
+A pull request or PR is a request to merge your code into another branch.
+
+Usually done on:
+- GitHub
+- GitLab
+- Bitbucket
+
+PR helps with:
+- code review
+- discussion
+- testing
+- safe merging
+
+
+===============================================================================
+44. COMMON GIT COMMANDS QUICK LIST
+===============================================================================
+
+Theory:
+Here are some very common commands and what they do.
+
+```bash
+git init
+```
+- create new Git repo
+
+```bash
+git clone <url>
+```
+- download existing repo
+
+```bash
+git status
+```
+- check current changes
+
+```bash
+git add .
+```
+- stage changes
+
+```bash
+git commit -m "message"
+```
+- save snapshot
+
+```bash
+git log --oneline
+```
+- see short history
+
+```bash
+git branch
+```
+- list branches
+
+```bash
+git checkout -b new-branch
+```
+- create and switch branch
+
+```bash
+git merge branch-name
+```
+- merge branch
+
+```bash
+git pull
+```
+- get latest changes
+
+```bash
+git push
+```
+- upload commits
+
+
+===============================================================================
+45. HOW TO SET UP GIT FOR A NEW PROJECT
+===============================================================================
+
+Theory:
+If you are starting a brand new project locally and want to push it to GitHub,
+use this flow.
+
+Step 1:
+Create project folder and initialize Git
+
+```bash
+mkdir my-project
+cd my-project
+git init
+```
+
+Step 2:
+Create files and make first commit
+
+```bash
+git add .
+git commit -m "Initial commit"
+```
+
+Step 3:
+Create empty repository on GitHub
+
+Step 4:
+Connect local repo to remote
+
+```bash
+git remote add origin https://github.com/user/my-project.git
+```
+
+Step 5:
+Push code
+
+```bash
+git push -u origin main
+```
+
+
+===============================================================================
+46. HOW TO SET UP AN EXISTING GITHUB PROJECT LOCALLY
+===============================================================================
+
+Theory:
+If the repository already exists online and you want it on your computer:
+
+```bash
+git clone https://github.com/user/project.git
+cd project
+git status
+git pull
+```
+
+This is the correct approach.
+Do not use `git init` in this case.
+
+
+===============================================================================
+47. HTTPS VS SSH FOR CLONE AND PUSH
+===============================================================================
+
+Theory:
+Repositories can be connected using HTTPS or SSH.
+
+HTTPS example:
+
+```bash
+git clone https://github.com/user/project.git
+```
+
+SSH example:
+
+```bash
+git clone git@github.com:user/project.git
+```
+
+HTTPS:
+- easier for beginners
+- may ask for credentials or token
+
+SSH:
+- better for frequent use
+- requires SSH key setup
+
+
+===============================================================================
+48. SSH KEY SETUP BASICS
+===============================================================================
+
+Theory:
+SSH allows secure communication with GitHub without typing credentials every
+time.
+
+Generate SSH key:
+
+```bash
+ssh-keygen -t ed25519 -C "you@example.com"
+```
+
+Start ssh-agent and add key:
+
+```bash
+ssh-add ~/.ssh/id_ed25519
+```
+
+Copy public key and add it to GitHub account.
+
+Test connection:
+
+```bash
+ssh -T git@github.com
+```
+
+
+===============================================================================
+49. GOOD GIT HABITS
+===============================================================================
+
+Theory:
+Good Git usage is not only about commands, but also discipline.
+
+Best practices:
+- commit often with meaningful messages
+- pull before starting work
+- use branches for features and fixes
+- avoid working directly on `main` in team projects
+- review `git status` before commit
+- use `.gitignore`
+- never commit passwords, keys, or secrets
+
+
+===============================================================================
+50. COMMON BEGINNER MISTAKES
+===============================================================================
+
+Theory:
+Some common mistakes are:
+- forgetting to commit
+- committing unwanted files
+- working on wrong branch
+- using `git init` inside an already cloned repository
+- using `git push` before `git pull` in team work
+- using `git reset --hard` without understanding the risk
+- committing secret files
+
+
+===============================================================================
+51. VERY COMMON INTERVIEW OR THEORY QUESTIONS
+===============================================================================
+
+What is Git?
+- distributed version control system
+
+What is a commit?
+- saved snapshot of staged changes
+
+What is the difference between Git and GitHub?
+- Git is the tool, GitHub is hosting platform
+
+What is branch?
+- separate line of development
+
+What is merge conflict?
+- conflict when Git cannot auto-merge changes
+
+Difference between pull and fetch?
+- `fetch` downloads only
+- `pull` downloads and merges
+
+Difference between reset and revert?
+- `reset` moves history pointer
+- `revert` creates undo commit
+
+
+===============================================================================
+52. QUICK COMMAND FLOW SHEET
+===============================================================================
+
+Create new repo:
+
+```bash
+git init
+git add .
+git commit -m "Initial commit"
+```
+
+Connect remote and push:
+
+```bash
+git remote add origin <url>
+git push -u origin main
+```
+
+Clone existing repo:
+
+```bash
+git clone <url>
+```
+
+Daily work:
+
+```bash
+git pull
+git status
+git add .
+git commit -m "Your message"
+git push
+```
+
+Branch work:
+
+```bash
+git checkout -b feature-name
+git add .
+git commit -m "Add feature"
+git push -u origin feature-name
+```
+
+
+===============================================================================
+53. FINAL REVISION SUMMARY
+===============================================================================
+
+Git mainly includes:
+- repository creation and cloning
+- setup with username and email
+- staging and committing
+- viewing logs and diffs
+- branch creation and merging
+- push, pull, fetch, and remote handling
+- undo commands like restore, reset, revert
+- stash, tags, and rebase basics
+- GitHub collaboration and pull requests
+
+Main practical idea:
+Git helps you work safely, track history, and collaborate efficiently.
+
+===============================================================================
+END OF CHEAT NOTE
+===============================================================================

@@ -1,0 +1,1790 @@
+===============================================================================
+                    CORE JAVA CHEAT NOTE - THEORY + EXAMPLES
+===============================================================================
+
+This note is designed for revision.
+It explains the theory of important Core Java topics and also gives short
+examples so the concepts are easier to remember.
+
+
+===============================================================================
+1. JAVA INTRODUCTION
+===============================================================================
+
+Theory:
+Java is a high-level, object-oriented, class-based programming language.
+It is widely used for backend development, desktop applications, Android,
+enterprise software, and large-scale systems.
+
+The main reason Java became so popular is:
+- platform independence
+- strong object-oriented support
+- large ecosystem
+- readability
+- security
+- reliability
+
+Java is platform independent because source code is compiled into bytecode,
+and that bytecode runs on the JVM.
+
+Important terms:
+- JDK: Java Development Kit, used to write and compile Java programs
+- JRE: Java Runtime Environment, used to run Java programs
+- JVM: Java Virtual Machine, executes bytecode
+
+Basic flow:
+1. Write code in `.java` file
+2. Compile with `javac`
+3. Get `.class` bytecode
+4. Run using JVM
+
+Example:
+
+```java
+class Hello {
+    public static void main(String[] args) {
+        System.out.println("Hello World");
+    }
+}
+```
+
+
+===============================================================================
+2. VARIABLES, DATA TYPES, AND LITERALS
+===============================================================================
+
+Theory:
+A variable is a named memory location used to store data.
+Data types decide what kind of data a variable can hold.
+
+Two main types of data types:
+
+1. Primitive data types
+- byte
+- short
+- int
+- long
+- float
+- double
+- char
+- boolean
+
+2. Non-primitive or reference types
+- String
+- arrays
+- classes
+- interfaces
+- objects
+
+Literals are fixed values written directly in code.
+
+Examples:
+
+```java
+int age = 21;
+double salary = 55000.50;
+char grade = 'A';
+boolean passed = true;
+String name = "Aman";
+```
+
+Theory points:
+- `int` is commonly used for whole numbers
+- `double` is commonly used for decimal values
+- `char` stores one character
+- `boolean` stores `true` or `false`
+- `String` stores text
+
+
+===============================================================================
+3. TYPE CONVERSION AND CASTING
+===============================================================================
+
+Theory:
+Sometimes we need to convert one type into another.
+This is called type conversion.
+
+There are two types:
+
+1. Implicit conversion
+- done automatically
+- usually when smaller type goes into larger compatible type
+
+2. Explicit conversion
+- done manually using casting
+- usually when larger type goes into smaller type
+
+Examples:
+
+```java
+int a = 10;
+double b = a;
+```
+
+```java
+double x = 10.9;
+int y = (int) x;
+```
+
+Theory points:
+- explicit conversion may lose data
+- converting from `double` to `int` removes decimal part
+
+
+===============================================================================
+4. OPERATORS
+===============================================================================
+
+Theory:
+Operators are symbols used to perform operations on variables and values.
+
+Main types:
+- arithmetic operators
+- assignment operators
+- relational operators
+- logical operators
+- unary operators
+- ternary operator
+
+Arithmetic example:
+
+```java
+int a = 10, b = 3;
+System.out.println(a + b);
+System.out.println(a - b);
+System.out.println(a * b);
+System.out.println(a / b);
+System.out.println(a % b);
+```
+
+Relational example:
+
+```java
+System.out.println(10 > 5);
+System.out.println(10 == 5);
+```
+
+Logical example:
+
+```java
+int age = 20;
+boolean hasId = true;
+System.out.println(age >= 18 && hasId);
+```
+
+Ternary example:
+
+```java
+String result = (age >= 18) ? "Adult" : "Minor";
+```
+
+Theory point:
+The ternary operator is a compact form of `if-else`.
+
+
+===============================================================================
+5. USER INPUT
+===============================================================================
+
+Theory:
+Java programs often need to take input from the user.
+Common ways are:
+- Scanner
+- BufferedReader
+
+Scanner is easier for beginners.
+BufferedReader is often faster and useful for line-based input.
+
+Scanner example:
+
+```java
+import java.util.Scanner;
+
+Scanner sc = new Scanner(System.in);
+int age = sc.nextInt();
+```
+
+BufferedReader example:
+
+```java
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+String name = br.readLine();
+```
+
+
+===============================================================================
+6. CONDITIONAL STATEMENTS
+===============================================================================
+
+Theory:
+Conditional statements allow the program to make decisions.
+
+Use:
+- `if` when there is one condition
+- `if-else` when there are two possible paths
+- `if-else-if` when multiple conditions exist
+- `switch` when comparing one value against many fixed cases
+
+Example:
+
+```java
+int marks = 82;
+
+if (marks >= 90) {
+    System.out.println("Grade A");
+} else if (marks >= 75) {
+    System.out.println("Grade B");
+} else {
+    System.out.println("Grade C");
+}
+```
+
+Switch example:
+
+```java
+int day = 2;
+switch (day) {
+    case 1:
+        System.out.println("Monday");
+        break;
+    case 2:
+        System.out.println("Tuesday");
+        break;
+    default:
+        System.out.println("Invalid");
+}
+```
+
+
+===============================================================================
+7. LOOPS
+===============================================================================
+
+Theory:
+Loops are used when we want to repeat a block of code.
+
+Types:
+- `for`
+- `while`
+- `do-while`
+
+`for` is useful when the number of iterations is known.
+`while` is useful when repetition depends on a condition.
+`do-while` is useful when the loop must run at least once.
+
+Examples:
+
+```java
+for (int i = 1; i <= 5; i++) {
+    System.out.println(i);
+}
+```
+
+```java
+int i = 1;
+while (i <= 5) {
+    System.out.println(i);
+    i++;
+}
+```
+
+```java
+int j = 1;
+do {
+    System.out.println(j);
+    j++;
+} while (j <= 3);
+```
+
+
+===============================================================================
+8. ARRAYS
+===============================================================================
+
+Theory:
+An array is a data structure that stores multiple values of the same type.
+
+Important features:
+- fixed size
+- same data type
+- index starts at 0
+
+One-dimensional array:
+
+```java
+int[] nums = {10, 20, 30};
+System.out.println(nums[0]);
+```
+
+Two-dimensional array:
+
+```java
+int[][] matrix = {
+    {1, 2},
+    {3, 4}
+};
+System.out.println(matrix[1][0]);
+```
+
+Jagged array:
+
+```java
+int[][] jagged = new int[2][];
+jagged[0] = new int[3];
+jagged[1] = new int[2];
+```
+
+Array of objects:
+
+```java
+class Student {
+    String name;
+}
+
+Student[] students = new Student[2];
+students[0] = new Student();
+students[0].name = "Aman";
+```
+
+Theory point:
+Arrays are fast and simple, but not flexible in size.
+
+
+===============================================================================
+9. STRINGS
+===============================================================================
+
+Theory:
+String is a sequence of characters.
+In Java, `String` is a class and strings are objects.
+
+Important concept:
+Strings are immutable.
+That means once a String object is created, its content cannot be changed.
+
+Example:
+
+```java
+String s = "Hello";
+s.concat(" World");
+System.out.println(s);
+```
+
+Correct way:
+
+```java
+String s = "Hello";
+s = s.concat(" World");
+System.out.println(s);
+```
+
+Mutable alternatives:
+- `StringBuffer`
+- `StringBuilder`
+
+Examples:
+
+```java
+StringBuilder sb = new StringBuilder("Java");
+sb.append(" Core");
+System.out.println(sb);
+```
+
+```java
+StringBuffer sbf = new StringBuffer("Hi");
+sbf.append(" There");
+System.out.println(sbf);
+```
+
+Theory point:
+- `StringBuffer` is synchronized and thread-safe
+- `StringBuilder` is faster in single-threaded programs
+
+
+===============================================================================
+10. CLASS AND OBJECT
+===============================================================================
+
+Theory:
+Object-oriented programming in Java is built around classes and objects.
+
+Class:
+- blueprint or template
+
+Object:
+- instance of a class
+
+Example:
+
+```java
+class Car {
+    String brand;
+
+    void drive() {
+        System.out.println(brand + " is driving");
+    }
+}
+
+Car c = new Car();
+c.brand = "BMW";
+c.drive();
+```
+
+Theory point:
+One class can create many objects, each with different data.
+
+
+===============================================================================
+11. METHODS
+===============================================================================
+
+Theory:
+A method is a block of code used to perform a specific task.
+Methods improve readability, reusability, and organization.
+
+Example:
+
+```java
+int add(int a, int b) {
+    return a + b;
+}
+```
+
+Call:
+
+```java
+int result = add(10, 20);
+System.out.println(result);
+```
+
+Method with no return:
+
+```java
+void greet() {
+    System.out.println("Welcome");
+}
+```
+
+
+===============================================================================
+12. METHOD OVERLOADING
+===============================================================================
+
+Theory:
+Method overloading means having multiple methods with the same name but
+different parameter lists.
+
+It is compile-time polymorphism.
+
+Example:
+
+```java
+class Calculator {
+    int add(int a, int b) {
+        return a + b;
+    }
+
+    int add(int a, int b, int c) {
+        return a + b + c;
+    }
+}
+```
+
+
+===============================================================================
+13. CONSTRUCTORS
+===============================================================================
+
+Theory:
+A constructor is a special method used to initialize objects.
+
+Features:
+- same name as class
+- no return type
+- called automatically when object is created
+
+Default constructor example:
+
+```java
+class Human {
+    Human() {
+        System.out.println("Object created");
+    }
+}
+```
+
+Parameterized constructor example:
+
+```java
+class Human {
+    int age;
+
+    Human(int age) {
+        this.age = age;
+    }
+}
+```
+
+
+===============================================================================
+14. ENCAPSULATION
+===============================================================================
+
+Theory:
+Encapsulation means wrapping data and methods together in a class and
+restricting direct access to internal data.
+
+Usually achieved by:
+- private fields
+- public getter and setter methods
+
+Example:
+
+```java
+class Account {
+    private double balance;
+
+    public void setBalance(double balance) {
+        if (balance >= 0) {
+            this.balance = balance;
+        }
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+}
+```
+
+Advantages:
+- data safety
+- controlled access
+- better maintainability
+
+
+===============================================================================
+15. THIS AND SUPER
+===============================================================================
+
+Theory:
+`this` refers to the current object.
+`super` refers to the parent class object.
+
+`this` example:
+
+```java
+class Human {
+    int age;
+
+    Human(int age) {
+        this.age = age;
+    }
+}
+```
+
+`super` example:
+
+```java
+class Animal {
+    Animal() {
+        System.out.println("Animal constructor");
+    }
+}
+
+class Dog extends Animal {
+    Dog() {
+        super();
+        System.out.println("Dog constructor");
+    }
+}
+```
+
+
+===============================================================================
+16. STATIC VARIABLE, METHOD, AND BLOCK
+===============================================================================
+
+Theory:
+Static members belong to the class instead of individual objects.
+
+Static variable:
+- shared by all objects
+
+Static method:
+- called using class name
+
+Static block:
+- runs once when class is loaded
+
+Examples:
+
+```java
+class Student {
+    static String school = "ABC School";
+    String name;
+}
+```
+
+```java
+class Demo {
+    static void show() {
+        System.out.println("Static method");
+    }
+}
+
+Demo.show();
+```
+
+```java
+class Demo2 {
+    static {
+        System.out.println("Static block runs once");
+    }
+}
+```
+
+
+===============================================================================
+17. STACK AND HEAP
+===============================================================================
+
+Theory:
+Java uses memory areas such as stack and heap.
+
+Stack:
+- local variables
+- method calls
+
+Heap:
+- objects and instance data
+
+Example:
+
+```java
+class Car {
+    int speed = 100;
+}
+
+public class Demo {
+    public static void main(String[] args) {
+        int x = 10;
+        Car c = new Car();
+    }
+}
+```
+
+Theory point:
+- `x` is stored on stack
+- object `new Car()` is stored on heap
+- reference `c` is on stack
+
+
+===============================================================================
+18. INHERITANCE
+===============================================================================
+
+Theory:
+Inheritance allows one class to acquire properties and methods of another.
+
+Parent class:
+- superclass
+
+Child class:
+- subclass
+
+Example:
+
+```java
+class Animal {
+    void eat() {
+        System.out.println("Eating");
+    }
+}
+
+class Dog extends Animal {
+    void bark() {
+        System.out.println("Barking");
+    }
+}
+```
+
+Benefits:
+- code reuse
+- hierarchical design
+- cleaner code
+
+
+===============================================================================
+19. POLYMORPHISM AND OVERRIDING
+===============================================================================
+
+Theory:
+Polymorphism means "one thing, many forms."
+
+Two common forms:
+
+1. Compile-time polymorphism
+- method overloading
+
+2. Runtime polymorphism
+- method overriding
+
+Overriding example:
+
+```java
+class Animal {
+    void sound() {
+        System.out.println("Animal sound");
+    }
+}
+
+class Dog extends Animal {
+    void sound() {
+        System.out.println("Bark");
+    }
+}
+```
+
+Runtime polymorphism example:
+
+```java
+Animal a = new Dog();
+a.sound();
+```
+
+
+===============================================================================
+20. DYNAMIC METHOD DISPATCH
+===============================================================================
+
+Theory:
+Dynamic method dispatch means the method that gets executed is decided at
+runtime based on the actual object, not just the reference type.
+
+Example:
+
+```java
+class A {
+    void show() {
+        System.out.println("A");
+    }
+}
+
+class B extends A {
+    void show() {
+        System.out.println("B");
+    }
+}
+
+A obj = new B();
+obj.show();
+```
+
+
+===============================================================================
+21. UPCASTING AND DOWNCASTING
+===============================================================================
+
+Theory:
+Upcasting means storing a child object in a parent reference.
+Downcasting means converting a parent reference back to child reference.
+
+Examples:
+
+```java
+Animal a = new Dog();
+```
+
+```java
+Dog d = (Dog) a;
+```
+
+Theory point:
+Upcasting is safe and common.
+Downcasting should be done carefully.
+
+
+===============================================================================
+22. ABSTRACTION
+===============================================================================
+
+Theory:
+Abstraction means hiding implementation details and showing only essential
+behavior.
+
+It helps focus on what an object does instead of how it does it.
+
+Abstraction can be achieved using:
+- abstract classes
+- interfaces
+
+Abstract class example:
+
+```java
+abstract class Car {
+    abstract void drive();
+
+    void musicSystem() {
+        System.out.println("Music system working");
+    }
+}
+
+class BMW extends Car {
+    void drive() {
+        System.out.println("BMW driving");
+    }
+}
+```
+
+
+===============================================================================
+23. INTERFACES
+===============================================================================
+
+Theory:
+An interface is a contract.
+Any class implementing the interface must define its methods.
+
+Interfaces are useful for:
+- abstraction
+- loose coupling
+- flexibility
+- multiple inheritance of type
+
+Example:
+
+```java
+interface Animal {
+    void sound();
+}
+
+class Dog implements Animal {
+    public void sound() {
+        System.out.println("Bark");
+    }
+}
+```
+
+Multiple interfaces example:
+
+```java
+interface A {
+    void show();
+}
+
+interface B {
+    void display();
+}
+
+class Demo implements A, B {
+    public void show() {
+        System.out.println("Show");
+    }
+
+    public void display() {
+        System.out.println("Display");
+    }
+}
+```
+
+
+===============================================================================
+24. INNER CLASS AND ANONYMOUS INNER CLASS
+===============================================================================
+
+Theory:
+An inner class is a class inside another class.
+An anonymous inner class is an unnamed class created for one-time use.
+
+Inner class example:
+
+```java
+class Outer {
+    class Inner {
+        void show() {
+            System.out.println("Inside inner class");
+        }
+    }
+}
+```
+
+Anonymous inner class example:
+
+```java
+Runnable r = new Runnable() {
+    public void run() {
+        System.out.println("Running");
+    }
+};
+```
+
+
+===============================================================================
+25. FINAL KEYWORD
+===============================================================================
+
+Theory:
+`final` is used to restrict modification.
+
+Final variable:
+- value cannot be changed
+
+Final method:
+- cannot be overridden
+
+Final class:
+- cannot be inherited
+
+Examples:
+
+```java
+final int x = 10;
+```
+
+```java
+class A2 {
+    final void show() {
+        System.out.println("Cannot override");
+    }
+}
+```
+
+```java
+final class Demo3 {
+}
+```
+
+
+===============================================================================
+26. ENUM
+===============================================================================
+
+Theory:
+Enum is a special data type used to represent a fixed set of constants.
+
+It improves readability and safety when values are limited.
+
+Example:
+
+```java
+enum Status {
+    RUNNING, FAILED, PENDING
+}
+
+Status s = Status.RUNNING;
+System.out.println(s);
+```
+
+Switch with enum:
+
+```java
+switch (s) {
+    case RUNNING:
+        System.out.println("It is running");
+        break;
+    case FAILED:
+        System.out.println("It failed");
+        break;
+    default:
+        System.out.println("Pending");
+}
+```
+
+
+===============================================================================
+27. ANNOTATIONS
+===============================================================================
+
+Theory:
+Annotations provide metadata about code.
+They help the compiler, tools, and frameworks understand intent.
+
+Common examples:
+- `@Override`
+- `@Deprecated`
+- `@FunctionalInterface`
+
+Example:
+
+```java
+class P {
+    void show() {
+    }
+}
+
+class Q extends P {
+    @Override
+    void show() {
+    }
+}
+```
+
+
+===============================================================================
+28. RECORD CLASSES
+===============================================================================
+
+Theory:
+Record is a compact way to create immutable data carrier classes.
+
+It reduces boilerplate because Java automatically provides:
+- constructor
+- accessor methods
+- `toString()`
+- `equals()`
+- `hashCode()`
+
+Example:
+
+```java
+record StudentRecord(int id, String name) {}
+```
+
+Usage:
+
+```java
+StudentRecord s = new StudentRecord(1, "Aman");
+System.out.println(s.id());
+System.out.println(s.name());
+System.out.println(s);
+```
+
+
+===============================================================================
+29. SEALED CLASSES
+===============================================================================
+
+Theory:
+Sealed classes restrict which classes are allowed to extend them.
+
+They are useful when you want controlled inheritance.
+
+Example:
+
+```java
+sealed class Shape permits Circle, Rectangle {
+}
+
+final class Rectangle extends Shape {
+}
+
+non-sealed class Circle extends Shape {
+}
+```
+
+
+===============================================================================
+30. EXCEPTIONS
+===============================================================================
+
+Theory:
+An exception is an abnormal event that disrupts normal program flow.
+
+Examples:
+- divide by zero
+- null access
+- file not found
+- invalid input
+
+Main categories:
+- checked exceptions
+- unchecked exceptions
+
+Unchecked example:
+
+```java
+int x = 10 / 0;
+```
+
+Null example:
+
+```java
+String s = null;
+System.out.println(s.length());
+```
+
+
+===============================================================================
+31. TRY, CATCH, FINALLY
+===============================================================================
+
+Theory:
+`try` contains risky code.
+`catch` handles exceptions.
+`finally` runs whether exception happens or not.
+
+Example:
+
+```java
+try {
+    int result = 10 / 0;
+} catch (ArithmeticException e) {
+    System.out.println("Cannot divide by zero");
+} finally {
+    System.out.println("Always runs");
+}
+```
+
+Multiple catch example:
+
+```java
+try {
+    String s = null;
+    System.out.println(s.length());
+} catch (ArithmeticException e) {
+    System.out.println("Arithmetic error");
+} catch (NullPointerException e) {
+    System.out.println("Null error");
+}
+```
+
+
+===============================================================================
+32. THROW, THROWS, CUSTOM EXCEPTION
+===============================================================================
+
+Theory:
+`throw` is used to throw an exception manually.
+`throws` is used in method declaration to indicate that a method may pass an
+exception to the caller.
+
+`throw` example:
+
+```java
+int age = 15;
+if (age < 18) {
+    throw new ArithmeticException("Not eligible");
+}
+```
+
+`throws` example:
+
+```java
+void readFile() throws Exception {
+}
+```
+
+Custom exception example:
+
+```java
+class MyException extends Exception {
+    public MyException(String message) {
+        super(message);
+    }
+}
+```
+
+
+===============================================================================
+33. WRAPPER CLASSES
+===============================================================================
+
+Theory:
+Wrapper classes convert primitive types into objects.
+
+Examples:
+- `int` -> `Integer`
+- `double` -> `Double`
+- `char` -> `Character`
+
+Why needed:
+- collections store objects, not primitives
+- useful in generics
+
+Example:
+
+```java
+int num = 10;
+Integer obj = num;
+int val = obj;
+```
+
+Parsing example:
+
+```java
+String s = "123";
+int n = Integer.parseInt(s);
+System.out.println(n + 1);
+```
+
+
+===============================================================================
+34. OPTIONAL
+===============================================================================
+
+Theory:
+`Optional` is a container object that may or may not contain a value.
+
+It is used to reduce direct null handling and make code safer.
+
+Example:
+
+```java
+Optional<String> name = Optional.of("Java");
+System.out.println(name.get());
+```
+
+Safer example:
+
+```java
+Optional<String> name = Optional.ofNullable(null);
+System.out.println(name.orElse("Default Name"));
+```
+
+
+===============================================================================
+35. COLLECTIONS FRAMEWORK
+===============================================================================
+
+Theory:
+Collections framework is used to store and manage groups of objects dynamically.
+
+Main interfaces:
+- List
+- Set
+- Map
+
+Benefits over arrays:
+- dynamic size
+- many built-in methods
+- easier data handling
+
+
+===============================================================================
+36. LIST, SET, MAP
+===============================================================================
+
+Theory:
+
+List:
+- ordered
+- duplicates allowed
+
+Set:
+- unordered in many implementations
+- duplicates not allowed
+
+Map:
+- stores key-value pairs
+
+Examples:
+
+```java
+List<Integer> list = new ArrayList<>();
+list.add(10);
+list.add(20);
+list.add(10);
+```
+
+```java
+Set<Integer> set = new HashSet<>();
+set.add(10);
+set.add(20);
+set.add(10);
+```
+
+```java
+Map<Integer, String> map = new HashMap<>();
+map.put(1, "Aman");
+map.put(2, "Java");
+System.out.println(map.get(1));
+```
+
+
+===============================================================================
+37. COMPARABLE AND COMPARATOR
+===============================================================================
+
+Theory:
+Both are used for sorting.
+
+Comparable:
+- natural/default ordering
+- implemented inside the class
+
+Comparator:
+- custom ordering
+- defined separately or with lambda
+
+Comparable example:
+
+```java
+class Student implements Comparable<Student> {
+    int age;
+
+    Student(int age) {
+        this.age = age;
+    }
+
+    public int compareTo(Student other) {
+        return this.age - other.age;
+    }
+}
+```
+
+Comparator example:
+
+```java
+Comparator<Integer> com = (i, j) -> i % 10 > j % 10 ? 1 : -1;
+```
+
+
+===============================================================================
+38. FUNCTIONAL INTERFACE
+===============================================================================
+
+Theory:
+A functional interface contains exactly one abstract method.
+
+It is the foundation of lambda expressions.
+
+Example:
+
+```java
+@FunctionalInterface
+interface A3 {
+    void show();
+}
+```
+
+Example with parameters:
+
+```java
+@FunctionalInterface
+interface Adder {
+    int add(int a, int b);
+}
+```
+
+
+===============================================================================
+39. LAMBDA EXPRESSIONS
+===============================================================================
+
+Theory:
+Lambda expressions provide a short way to implement functional interfaces.
+
+Benefits:
+- less boilerplate code
+- better readability
+- useful in streams and collections
+
+Examples:
+
+```java
+A3 obj = () -> System.out.println("Hello from lambda");
+obj.show();
+```
+
+```java
+Adder adder = (a, b) -> a + b;
+System.out.println(adder.add(10, 20));
+```
+
+
+===============================================================================
+40. METHOD REFERENCE AND CONSTRUCTOR REFERENCE
+===============================================================================
+
+Theory:
+Method reference is a shorter form of lambda when an existing method is
+already available.
+
+Constructor reference is a reference to a constructor using `::new`.
+
+Examples:
+
+```java
+List<String> names = Arrays.asList("A", "B", "C");
+names.forEach(System.out::println);
+```
+
+```java
+Function<String, Integer> f = Integer::parseInt;
+System.out.println(f.apply("123"));
+```
+
+```java
+Supplier<StringBuilder> s = StringBuilder::new;
+StringBuilder sb = s.get();
+```
+
+
+===============================================================================
+41. STREAM API
+===============================================================================
+
+Theory:
+Streams allow processing collections in a functional style.
+
+Common operations:
+- `filter()` -> selects matching elements
+- `map()` -> transforms elements
+- `sorted()` -> sorts elements
+- `reduce()` -> combines values
+- `forEach()` -> performs action on each element
+
+Examples:
+
+```java
+List<Integer> nums = Arrays.asList(2, 3, 4, 5, 6);
+nums.stream()
+    .filter(n -> n % 2 == 0)
+    .forEach(System.out::println);
+```
+
+```java
+nums.stream()
+    .map(n -> n * 2)
+    .forEach(System.out::println);
+```
+
+```java
+int sum = nums.stream()
+    .reduce(0, (c, e) -> c + e);
+System.out.println(sum);
+```
+
+
+===============================================================================
+42. SEQUENTIAL AND PARALLEL STREAMS
+===============================================================================
+
+Theory:
+Sequential stream runs step by step in one flow.
+Parallel stream may use multiple threads for faster processing in some cases.
+
+Examples:
+
+```java
+nums.stream().forEach(System.out::println);
+```
+
+```java
+nums.parallelStream().forEach(System.out::println);
+```
+
+Theory point:
+Parallel stream does not always improve performance.
+
+
+===============================================================================
+43. THREADS
+===============================================================================
+
+Theory:
+A thread is the smallest unit of execution in a program.
+
+Multithreading allows multiple tasks to run concurrently.
+
+Why use threads:
+- better responsiveness
+- better CPU use
+- background tasks
+
+Creating thread by extending `Thread`:
+
+```java
+class MyThread extends Thread {
+    public void run() {
+        System.out.println("Thread is running");
+    }
+}
+
+MyThread t1 = new MyThread();
+t1.start();
+```
+
+Creating thread by implementing `Runnable`:
+
+```java
+class MyTask implements Runnable {
+    public void run() {
+        System.out.println("Task running");
+    }
+}
+
+Thread t2 = new Thread(new MyTask());
+t2.start();
+```
+
+
+===============================================================================
+44. THREAD PRIORITY, SLEEP, AND STATES
+===============================================================================
+
+Theory:
+Thread priority suggests importance of a thread.
+Sleep pauses execution for a fixed time.
+Threads move through different states during execution.
+
+Common states:
+- NEW
+- RUNNABLE
+- RUNNING
+- WAITING / BLOCKED
+- TERMINATED
+
+Examples:
+
+```java
+Thread t = new Thread();
+t.setPriority(Thread.MAX_PRIORITY);
+```
+
+```java
+try {
+    Thread.sleep(1000);
+} catch (InterruptedException e) {
+    e.printStackTrace();
+}
+```
+
+```java
+Thread t3 = new Thread(() -> System.out.println("Hello"));
+System.out.println(t3.getState());
+```
+
+
+===============================================================================
+45. RACE CONDITION
+===============================================================================
+
+Theory:
+Race condition happens when multiple threads access shared data at the same
+time and the final result becomes unpredictable.
+
+Problem example:
+
+```java
+class Counter {
+    int count;
+
+    public void increment() {
+        count++;
+    }
+}
+```
+
+Safer version:
+
+```java
+class CounterSafe {
+    int count;
+
+    public synchronized void increment() {
+        count++;
+    }
+}
+```
+
+
+===============================================================================
+46. PACKAGES
+===============================================================================
+
+Theory:
+A package is used to group related classes.
+
+Advantages:
+- better organization
+- avoids naming conflicts
+- improves maintainability
+
+Example:
+
+```java
+package tools;
+
+public class Calc {
+    public int add(int a, int b) {
+        return a + b;
+    }
+}
+```
+
+Import example:
+
+```java
+import tools.Calc;
+```
+
+
+===============================================================================
+47. ACCESS MODIFIERS
+===============================================================================
+
+Theory:
+Access modifiers control visibility of classes, methods, and variables.
+
+Types:
+- `private`
+- default
+- `protected`
+- `public`
+
+Meaning:
+- `private` -> same class only
+- default -> same package only
+- `protected` -> same package + subclasses
+- `public` -> everywhere
+
+Example:
+
+```java
+class Demo4 {
+    private int a = 10;
+    int b = 20;
+    protected int c = 30;
+    public int d = 40;
+}
+```
+
+
+===============================================================================
+48. OBJECT CLASS METHODS
+===============================================================================
+
+Theory:
+Every Java class indirectly inherits from `Object`.
+
+Important methods:
+- `toString()`
+- `equals()`
+- `hashCode()`
+
+`toString()` example:
+
+```java
+class Laptop {
+    String model = "Lenovo";
+
+    public String toString() {
+        return model;
+    }
+}
+```
+
+`equals()` example:
+
+```java
+String a = new String("Java");
+String b = new String("Java");
+System.out.println(a.equals(b));
+```
+
+Theory point:
+If you override `equals()`, you should usually override `hashCode()` too.
+
+
+===============================================================================
+49. RECORD VS NORMAL CLASS
+===============================================================================
+
+Theory:
+A normal class can contain fields, methods, constructors, and business logic.
+A record is mainly for immutable data storage with less code.
+
+Normal class example:
+
+```java
+class StudentNormal {
+    private int id;
+    private String name;
+
+    StudentNormal(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+}
+```
+
+Record example:
+
+```java
+record StudentSimple(int id, String name) {}
+```
+
+
+===============================================================================
+50. OOPS PILLARS
+===============================================================================
+
+Theory:
+The four major pillars of object-oriented programming are:
+
+1. Encapsulation
+- hiding data and controlling access
+
+2. Inheritance
+- reusing code from parent class
+
+3. Polymorphism
+- same method or reference can behave differently
+
+4. Abstraction
+- showing only essential features
+
+Short example:
+
+```java
+Animal a = new Dog();
+```
+
+This line shows polymorphism.
+
+
+===============================================================================
+51. QUICK DIFFERENCE SHEET
+===============================================================================
+
+String vs StringBuilder:
+- String is immutable
+- StringBuilder is mutable
+
+Array vs ArrayList:
+- array has fixed size
+- ArrayList has dynamic size
+
+Overloading vs Overriding:
+- overloading -> same name, different parameters
+- overriding -> child changes parent method behavior
+
+Abstract class vs Interface:
+- abstract class can contain state and concrete methods
+- interface mainly defines contract
+
+Checked vs Unchecked exception:
+- checked -> compile-time checked
+- unchecked -> runtime
+
+Comparable vs Comparator:
+- Comparable -> natural sorting
+- Comparator -> custom sorting
+
+
+===============================================================================
+52. FINAL REVISION SUMMARY
+===============================================================================
+
+Core Java mainly includes:
+- Java basics
+- variables and data types
+- operators, conditions, and loops
+- arrays and strings
+- classes, objects, methods, constructors
+- encapsulation, inheritance, polymorphism, abstraction
+- interfaces and inner classes
+- exceptions
+- collections
+- lambda expressions and streams
+- multithreading
+- packages and access modifiers
+- modern features like records and sealed classes
+
+===============================================================================
+END OF CHEAT NOTE
+===============================================================================
