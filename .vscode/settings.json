@@ -1,0 +1,14 @@
+{
+  "java.project.sourcePaths": [
+    "7.JDBC\\FirstJDBCapp\\src"
+  ],
+  "java.project.outputPath": "7.JDBC\\FirstJDBCapp\\bin",
+  "java.project.referencedLibraries": [
+    "7.JDBC\\FirstJDBCapp\\lib\\**\\*.jar"
+  ],
+  "code-runner.fileDirectoryAsCwd": false,
+  "code-runner.runInTerminal": true,
+  "code-runner.executorMap": {
+    "java": "cd \"$workspaceRoot/7.JDBC/FirstJDBCapp\"; if (!(Test-Path bin)) { New-Item -ItemType Directory -Path bin | Out-Null }; javac -cp \"lib/*\" -d bin \"src/com/yashu/$fileName\"; if ($?) { java -cp \"bin;lib/*\" com.yashu.$fileNameWithoutExt }"
+  }
+}
