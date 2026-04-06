@@ -1,0 +1,2479 @@
+======================================================================
+DSA CHEAT NOTE IN JAVA
+Core theory, complexities, built-in Java classes, and custom approaches
+======================================================================
+
+Authoring goal:
+- This note is a practical study guide for common Data Structures and Algorithms
+  topics taught in college courses, interviews, and Java programming practice.
+- It covers theory, when to use each structure, Java built-in options, and how
+  to implement the same idea without relying on built-in data structures.
+
+How to use this note:
+- Read section 1 first for complexity and problem-solving basics.
+- For each data structure, learn:
+  1. What it is
+  2. When to use it
+  3. Time/space complexity
+  4. Java built-in classes
+  5. How to implement it yourself
+- Use the code snippets as starting templates, not as production libraries.
+
+
+======================================================================
+1. FOUNDATIONS
+======================================================================
+
+1.1 What is DSA?
+- DSA = Data Structures + Algorithms.
+- Data Structure = the way data is organized.
+- Algorithm = the step-by-step procedure used to solve a problem.
+- Good DSA improves:
+  - speed
+  - memory usage
+  - clarity
+  - scalability
+
+1.2 Big-O, Big-Theta, Big-Omega
+- Big-O: upper bound, often used for worst-case growth.
+- Big-Theta: tight bound.
+- Big-Omega: lower bound.
+
+Common complexities:
+- O(1): constant
+- O(log n): logarithmic
+- O(n): linear
+- O(n log n): efficient comparison sorting class
+- O(n^2): nested loop behavior
+- O(2^n), O(n!): exponential/factorial, usually expensive
+
+1.3 Space Complexity
+- Extra memory used by the algorithm beyond the input itself.
+- Watch for:
+  - recursion stack
+  - auxiliary arrays
+  - hash tables
+  - queues/stacks used during traversal
+
+1.4 Recursion Basics
+- Every recursive solution needs:
+  - base case
+  - recursive case
+- Recursion uses the call stack.
+- Convert recursion to iteration with an explicit stack when needed.
+
+Example:
+int factorial(int n) {
+    if (n <= 1) return 1;
+    return n * factorial(n - 1);
+}
+
+1.5 Iterative vs Recursive
+- Iterative:
+  - often more memory-efficient
+  - avoids stack overflow on deep inputs
+- Recursive:
+  - often cleaner for trees, divide-and-conquer, DFS, backtracking
+
+1.6 Java Primitive Arrays vs Collections
+- Arrays:
+  - fixed size
+  - fast indexed access
+  - lower overhead
+- Collections:
+  - dynamic sizing
+  - richer APIs
+  - object-based
+
+
+======================================================================
+2. ARRAYS AND STRINGS
+======================================================================
+
+2.1 Array Theory
+- Contiguous memory block
+- Best for index-based access
+- Insertion/deletion in middle is expensive because shifting is needed
+
+Complexities:
+- Access by index: O(1)
+- Update by index: O(1)
+- Search unsorted: O(n)
+- Search sorted with binary search: O(log n)
+- Insert at end:
+  - fixed array: O(1) if space exists
+  - dynamic array: amortized O(1)
+- Insert/delete at middle: O(n)
+
+Java built-in options:
+- int[] arr = new int[5];
+- Arrays utility class:
+  - Arrays.sort(arr)
+  - Arrays.binarySearch(arr, x)
+  - Arrays.fill(arr, value)
+  - Arrays.copyOf(arr, newSize)
+
+Without built-ins:
+- manage size manually with a fixed array and current length variable
+
+Example custom insert at end:
+int[] arr = new int[10];
+int size = 0;
+arr[size++] = 42;
+
+2.2 Dynamic Array
+- Resizable array
+- When full, allocate bigger array and copy values
+- Java built-in class: ArrayList<E>
+
+ArrayList basics:
+ArrayList<Integer> list = new ArrayList<>();
+list.add(10);
+list.get(0);
+list.set(0, 99);
+list.remove(list.size() - 1);
+
+ArrayList complexity:
+- add at end: amortized O(1)
+- get/set by index: O(1)
+- insert/delete in middle: O(n)
+- search: O(n)
+
+Custom dynamic array idea:
+- keep:
+  - int[] data
+  - int size
+  - int capacity
+- double capacity when full
+
+2.3 Strings
+- Java String is immutable.
+- Frequent modifications should use:
+  - StringBuilder
+  - char[]
+
+Useful built-ins:
+- s.length()
+- s.charAt(i)
+- s.substring(a, b)
+- s.indexOf("x")
+- s.toCharArray()
+- new StringBuilder().append(...).reverse().toString()
+
+Common string problems:
+- reverse string
+- palindrome
+- anagram
+- frequency counting
+- substring search
+- longest unique substring
+
+
+======================================================================
+3. LINKED LIST
+======================================================================
+
+3.1 Singly Linked List Theory
+- Each node stores:
+  - data
+  - next pointer
+- Good for frequent insertions/deletions when node position is known
+- No random access
+
+Complexities:
+- access by index: O(n)
+- search: O(n)
+- insert/delete at head: O(1)
+- insert/delete after known node: O(1)
+- insert/delete at tail:
+  - O(1) if tail pointer exists
+  - O(n) otherwise
+
+Custom node:
+class Node {
+    int data;
+    Node next;
+    Node(int data) {
+        this.data = data;
+    }
+}
+
+Insert at head:
+Node head;
+void insertAtHead(int data) {
+    Node node = new Node(data);
+    node.next = head;
+    head = node;
+}
+
+3.2 Doubly Linked List
+- Node has:
+  - prev
+  - data
+  - next
+- Easier deletion of current node
+- Uses extra memory
+
+3.3 Circular Linked List
+- Last node points back to head
+- Useful in round-robin problems and cyclic traversal
+
+Java built-in option:
+- LinkedList<E>
+- Implements:
+  - List
+  - Deque
+  - Queue
+
+Examples:
+LinkedList<Integer> list = new LinkedList<>();
+list.addFirst(10);
+list.addLast(20);
+list.removeFirst();
+list.get(0);
+
+When LinkedList is not ideal in Java:
+- For stack/queue operations, ArrayDeque is often preferred.
+- For random access, ArrayList is better.
+
+
+======================================================================
+4. STACK
+======================================================================
+
+4.1 Stack Theory
+- LIFO = Last In, First Out
+- Operations:
+  - push
+  - pop
+  - peek/top
+  - isEmpty
+
+Use cases:
+- function call stack
+- undo/redo
+- expression evaluation
+- parentheses matching
+- DFS
+- monotonic stack problems
+
+Complexities:
+- push: O(1)
+- pop: O(1)
+- peek: O(1)
+
+Java built-in choices:
+- Preferred: ArrayDeque<E>
+- Older class: Stack<E> (legacy, synchronized, less preferred)
+
+Built-in example:
+ArrayDeque<Integer> stack = new ArrayDeque<>();
+stack.push(10);
+stack.push(20);
+int x = stack.pop();
+int y = stack.peek();
+
+Custom array stack:
+class StackCustom {
+    int[] arr;
+    int top = 0;
+
+    StackCustom(int capacity) {
+        arr = new int[capacity];
+    }
+
+    void push(int x) {
+        arr[top++] = x;
+    }
+
+    int pop() {
+        return arr[--top];
+    }
+
+    int peek() {
+        return arr[top - 1];
+    }
+}
+
+Custom linked-list stack:
+- push/pop at head in O(1)
+
+
+======================================================================
+5. QUEUE AND DEQUE
+======================================================================
+
+5.1 Queue Theory
+- FIFO = First In, First Out
+- Operations:
+  - enqueue
+  - dequeue
+  - front/peek
+
+Use cases:
+- scheduling
+- BFS
+- buffering
+- producer-consumer systems
+
+Complexities:
+- enqueue: O(1)
+- dequeue: O(1)
+- peek: O(1)
+
+Java built-in choices:
+- Preferred: ArrayDeque<E>
+- Interface style: Queue<E>
+- LinkedList<E> can work, but ArrayDeque is usually better
+
+Built-in example:
+Queue<Integer> q = new ArrayDeque<>();
+q.offer(10);
+q.offer(20);
+int first = q.poll();
+int next = q.peek();
+
+5.2 Circular Queue
+- Reuses empty space by wrapping around
+- Use modulo arithmetic:
+  - rear = (rear + 1) % n
+  - front = (front + 1) % n
+
+5.3 Deque
+- Double-ended queue
+- Insert/remove at both ends
+- Useful for:
+  - sliding window maximum
+  - palindrome checks
+  - 0-1 BFS
+
+Java built-in:
+Deque<Integer> dq = new ArrayDeque<>();
+dq.addFirst(10);
+dq.addLast(20);
+dq.removeFirst();
+dq.removeLast();
+
+
+======================================================================
+6. HASHING
+======================================================================
+
+6.1 Hash Table Theory
+- Maps keys to indices using a hash function.
+- Goal: near O(1) average insert/search/delete.
+- Collisions happen when multiple keys map to same location.
+
+Collision handling:
+- chaining
+- open addressing
+
+Important ideas:
+- load factor
+- rehashing/resizing
+- hashCode and equals for custom objects in Java
+
+Average complexities:
+- insert: O(1)
+- search: O(1)
+- delete: O(1)
+
+Worst case:
+- O(n)
+
+Java built-in classes:
+- HashMap<K, V>
+- HashSet<E>
+- LinkedHashMap<K, V>
+- LinkedHashSet<E>
+- Hashtable<K, V> (legacy, synchronized)
+
+Examples:
+HashMap<String, Integer> map = new HashMap<>();
+map.put("apple", 3);
+map.get("apple");
+map.containsKey("apple");
+map.remove("apple");
+
+HashSet<Integer> set = new HashSet<>();
+set.add(10);
+set.contains(10);
+set.remove(10);
+
+When to use LinkedHashMap/LinkedHashSet:
+- Need insertion order preserved
+
+When to use TreeMap/TreeSet instead:
+- Need sorted order
+
+Without built-ins:
+- array of buckets
+- each bucket can be a linked list of key-value nodes
+
+Frequency counting example:
+int[] freq = new int[26];
+for (char c : s.toCharArray()) {
+    freq[c - 'a']++;
+}
+
+This array trick is often faster than a HashMap when the key range is small.
+
+
+======================================================================
+7. TREES
+======================================================================
+
+7.1 Tree Basics
+- Hierarchical structure of nodes
+- Terms:
+  - root
+  - parent
+  - child
+  - leaf
+  - height
+  - depth
+  - subtree
+
+7.2 Binary Tree
+- Each node has at most two children
+
+Node:
+class TreeNode {
+    int data;
+    TreeNode left, right;
+    TreeNode(int data) {
+        this.data = data;
+    }
+}
+
+Traversals:
+- DFS:
+  - preorder: root, left, right
+  - inorder: left, root, right
+  - postorder: left, right, root
+- BFS:
+  - level order
+
+Recursive traversal examples:
+void inorder(TreeNode node) {
+    if (node == null) return;
+    inorder(node.left);
+    System.out.print(node.data + " ");
+    inorder(node.right);
+}
+
+Iterative BFS example:
+Queue<TreeNode> q = new ArrayDeque<>();
+q.offer(root);
+while (!q.isEmpty()) {
+    TreeNode cur = q.poll();
+    if (cur.left != null) q.offer(cur.left);
+    if (cur.right != null) q.offer(cur.right);
+}
+
+7.3 Binary Search Tree (BST)
+- Left subtree values < root
+- Right subtree values > root
+- Inorder traversal gives sorted order
+
+Average complexities:
+- search/insert/delete: O(log n)
+
+Worst case:
+- O(n) if skewed
+
+BST insert idea:
+TreeNode insert(TreeNode root, int x) {
+    if (root == null) return new TreeNode(x);
+    if (x < root.data) root.left = insert(root.left, x);
+    else if (x > root.data) root.right = insert(root.right, x);
+    return root;
+}
+
+BST delete cases:
+- node is leaf
+- node has one child
+- node has two children
+  - replace with inorder successor or predecessor
+
+Java built-in sorted-tree classes:
+- TreeMap<K, V>
+- TreeSet<E>
+
+Properties:
+- typically O(log n)
+- sorted order maintained
+
+7.4 Self-Balancing BST
+Examples:
+- AVL Tree
+- Red-Black Tree
+
+AVL:
+- balance factor = height(left) - height(right)
+- strict balancing
+- faster lookups, more rotations
+
+Red-Black:
+- looser balancing than AVL
+- widely used in libraries
+- Java TreeMap and TreeSet are based on Red-Black tree behavior
+
+7.5 Heap
+- Complete binary tree with heap property
+- Types:
+  - max-heap
+  - min-heap
+
+Operations:
+- insert
+- peek min/max
+- remove root
+
+Complexities:
+- peek: O(1)
+- insert: O(log n)
+- remove root: O(log n)
+- build heap from array: O(n)
+
+Java built-in:
+- PriorityQueue<E> = min-heap by default
+
+Examples:
+PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+minHeap.offer(5);
+minHeap.offer(1);
+minHeap.offer(9);
+int smallest = minHeap.poll();
+
+Max-heap:
+PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
+
+Heap use cases:
+- top K problems
+- scheduling
+- Dijkstra
+- Huffman coding
+- median of stream
+
+7.6 Trie
+- Prefix tree for strings
+- Excellent for prefix queries
+
+Operations:
+- insert word
+- search word
+- startsWith(prefix)
+
+Complexities:
+- O(L), where L is word length
+
+Use cases:
+- autocomplete
+- dictionary lookup
+- prefix counting
+
+Java has no direct built-in Trie class.
+
+7.7 Segment Tree
+- Tree for range queries and point updates
+- Supports things like:
+  - range sum
+  - range min/max
+
+Complexities:
+- build: O(n)
+- query: O(log n)
+- update: O(log n)
+
+Use cases:
+- competitive programming
+- interval/range query problems
+
+7.8 Fenwick Tree / Binary Indexed Tree
+- Efficient prefix sums with updates
+
+Complexities:
+- update: O(log n)
+- prefix sum: O(log n)
+
+Use when:
+- simpler than segment tree for prefix/range sum tasks
+
+
+======================================================================
+8. GRAPHS
+======================================================================
+
+8.1 Graph Basics
+- Graph = set of vertices and edges
+- Can be:
+  - directed or undirected
+  - weighted or unweighted
+  - cyclic or acyclic
+  - connected or disconnected
+
+Representations:
+- adjacency matrix
+- adjacency list
+
+Adjacency matrix:
+- space: O(V^2)
+- edge check: O(1)
+- better for dense graphs
+
+Adjacency list:
+- space: O(V + E)
+- better for sparse graphs
+
+Java adjacency list example:
+List<List<Integer>> graph = new ArrayList<>();
+for (int i = 0; i < n; i++) {
+    graph.add(new ArrayList<>());
+}
+graph.get(0).add(1);
+
+8.2 BFS
+- Breadth-first search
+- Uses queue
+- Explores level by level
+
+Use cases:
+- shortest path in unweighted graph
+- level order traversal
+- connected components
+
+Time:
+- O(V + E)
+
+8.3 DFS
+- Depth-first search
+- Uses recursion or stack
+
+Use cases:
+- cycle detection
+- topological sort
+- connected components
+- backtracking-style exploration
+
+Time:
+- O(V + E)
+
+DFS example:
+void dfs(int node, List<List<Integer>> graph, boolean[] vis) {
+    vis[node] = true;
+    for (int nei : graph.get(node)) {
+        if (!vis[nei]) dfs(nei, graph, vis);
+    }
+}
+
+8.4 Topological Sort
+- For Directed Acyclic Graphs only
+- Orders nodes so that every edge u -> v means u appears before v
+
+Methods:
+- DFS-based
+- Kahn's algorithm using indegree + queue
+
+Use cases:
+- course schedule
+- build dependency order
+
+8.5 Shortest Paths
+- BFS:
+  - unweighted graph
+- Dijkstra:
+  - non-negative weights
+  - often uses PriorityQueue
+- Bellman-Ford:
+  - handles negative edges
+  - detects negative cycles
+- Floyd-Warshall:
+  - all-pairs shortest path
+  - O(V^3)
+
+8.6 Minimum Spanning Tree
+- Connects all vertices with minimum total edge weight
+- Algorithms:
+  - Kruskal
+  - Prim
+
+Useful structure:
+- Disjoint Set Union / Union-Find
+
+
+======================================================================
+9. SORTING
+======================================================================
+
+9.1 Sorting Overview
+- Rearranges data into a chosen order
+- Stable sort preserves relative order of equal elements
+- In-place sort uses little extra memory
+
+9.2 Bubble Sort
+- Repeatedly swap adjacent out-of-order elements
+- Time: O(n^2)
+- Space: O(1)
+- Stable: yes
+- Use: educational only
+
+9.3 Selection Sort
+- Repeatedly select minimum and place it at front
+- Time: O(n^2)
+- Space: O(1)
+- Stable: no, typically
+
+9.4 Insertion Sort
+- Build sorted portion one element at a time
+- Time:
+  - best: O(n)
+  - worst: O(n^2)
+- Space: O(1)
+- Stable: yes
+- Good for:
+  - small arrays
+  - nearly sorted data
+
+9.5 Merge Sort
+- Divide and conquer
+- Split array, sort halves, merge
+- Time: O(n log n)
+- Space: O(n)
+- Stable: yes
+
+9.6 Quick Sort
+- Choose pivot and partition
+- Average: O(n log n)
+- Worst: O(n^2)
+- Space:
+  - recursion stack
+- Usually very fast in practice
+- Not stable by default
+
+9.7 Heap Sort
+- Build heap, repeatedly extract root
+- Time: O(n log n)
+- Space: O(1) auxiliary if in-place array heap version
+- Not stable
+
+9.8 Counting Sort
+- Non-comparison sort
+- Use when value range is small
+- Time: O(n + k)
+- Space: O(k)
+
+9.9 Radix Sort
+- Sort by digits/characters
+- Often uses counting sort internally
+- Good for fixed-length numeric/string patterns
+
+Java built-in sorting:
+- Arrays.sort(int[]) for primitives
+- Arrays.sort(T[]) for objects
+- Collections.sort(list)
+- list.sort(comparator)
+
+Comparator example:
+list.sort((a, b) -> Integer.compare(a.age, b.age));
+
+Built-in choice notes:
+- Primitive arrays: highly optimized built-in sort
+- Objects: stable sort behavior is commonly relied upon in Java APIs
+
+
+======================================================================
+10. SEARCHING
+======================================================================
+
+10.1 Linear Search
+- Check each element one by one
+- Time: O(n)
+
+10.2 Binary Search
+- Works on sorted data
+- Repeatedly halves search space
+- Time: O(log n)
+
+Manual example:
+int binarySearch(int[] arr, int target) {
+    int lo = 0, hi = arr.length - 1;
+    while (lo <= hi) {
+        int mid = lo + (hi - lo) / 2;
+        if (arr[mid] == target) return mid;
+        if (arr[mid] < target) lo = mid + 1;
+        else hi = mid - 1;
+    }
+    return -1;
+}
+
+Java built-in:
+- Arrays.binarySearch(arr, target)
+- Collections.binarySearch(list, target)
+
+
+======================================================================
+11. RECURSION, BACKTRACKING, DIVIDE AND CONQUER
+======================================================================
+
+11.1 Divide and Conquer
+- Break into smaller subproblems
+- Solve recursively
+- Combine answers
+
+Examples:
+- merge sort
+- quick sort
+- binary search
+
+11.2 Backtracking
+- Try a choice
+- recurse
+- undo the choice
+
+Common problems:
+- subsets
+- permutations
+- N-Queens
+- Sudoku
+- maze/path generation
+
+Template:
+void backtrack(...) {
+    if (baseCase) {
+        // record answer
+        return;
+    }
+    for (...) {
+        // choose
+        backtrack(...);
+        // unchoose
+    }
+}
+
+
+======================================================================
+12. GREEDY ALGORITHMS
+======================================================================
+
+Theory:
+- Make the best local choice at each step
+- Works only when greedy-choice property holds
+
+Examples:
+- activity selection
+- Huffman coding
+- Kruskal
+- Prim
+- interval merging
+
+Warning:
+- Greedy is not always correct.
+- Always justify why local optimum leads to global optimum.
+
+
+======================================================================
+13. DYNAMIC PROGRAMMING
+======================================================================
+
+Theory:
+- Use when problem has:
+  - overlapping subproblems
+  - optimal substructure
+
+Approaches:
+- top-down memoization
+- bottom-up tabulation
+
+Classic examples:
+- Fibonacci
+- 0/1 Knapsack
+- Longest Common Subsequence
+- Coin Change
+- Longest Increasing Subsequence
+- Matrix Chain Multiplication
+
+Memoized Fibonacci:
+int fib(int n, int[] dp) {
+    if (n <= 1) return n;
+    if (dp[n] != -1) return dp[n];
+    return dp[n] = fib(n - 1, dp) + fib(n - 2, dp);
+}
+
+Tips:
+- define state clearly
+- define transition
+- decide base cases
+- optimize space if only previous states are needed
+
+
+======================================================================
+14. UNION-FIND / DISJOINT SET UNION
+======================================================================
+
+Theory:
+- Tracks connected components
+- Supports:
+  - find(x)
+  - union(a, b)
+
+Optimizations:
+- path compression
+- union by rank/size
+
+Complexity:
+- nearly O(1) amortized
+
+Use cases:
+- Kruskal MST
+- cycle detection in undirected graph
+- grouping connectivity problems
+
+Template:
+class DSU {
+    int[] parent, size;
+
+    DSU(int n) {
+        parent = new int[n];
+        size = new int[n];
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+            size[i] = 1;
+        }
+    }
+
+    int find(int x) {
+        if (parent[x] != x) {
+            parent[x] = find(parent[x]);
+        }
+        return parent[x];
+    }
+
+    void union(int a, int b) {
+        int pa = find(a), pb = find(b);
+        if (pa == pb) return;
+        if (size[pa] < size[pb]) {
+            int temp = pa; pa = pb; pb = temp;
+        }
+        parent[pb] = pa;
+        size[pa] += size[pb];
+    }
+}
+
+
+======================================================================
+15. COMMON JAVA BUILT-IN DSA CLASSES
+======================================================================
+
+15.1 Arrays and Utilities
+- Arrays
+- Collections
+- Comparator
+
+15.2 List Implementations
+- ArrayList
+- LinkedList
+- Vector (legacy, synchronized)
+
+15.3 Queue/Deque Implementations
+- ArrayDeque
+- LinkedList
+- PriorityQueue
+
+15.4 Map Implementations
+- HashMap
+- LinkedHashMap
+- TreeMap
+- Hashtable (legacy)
+
+15.5 Set Implementations
+- HashSet
+- LinkedHashSet
+- TreeSet
+
+15.6 Java class quick comparison
+
+ArrayList:
+- dynamic array
+- fast random access
+- slow middle insert/delete
+
+LinkedList:
+- doubly linked list
+- good head/tail insertion
+- poor random access
+
+ArrayDeque:
+- best general-purpose stack/queue in Java
+- no null elements
+
+PriorityQueue:
+- min-heap by default
+- not fully sorted when iterated
+- only root is guaranteed smallest
+
+HashMap:
+- average O(1)
+- no ordering guarantee
+
+LinkedHashMap:
+- insertion/access order support
+
+TreeMap:
+- sorted keys
+- O(log n)
+
+HashSet:
+- average O(1)
+- unique elements
+
+TreeSet:
+- sorted unique elements
+- O(log n)
+
+15.7 Important built-in methods by class
+
+How to read this section:
+- Method: actual Java method name
+- Use: what the method is for
+- Example: a common DSA-style usage
+- Note: important warning or interview-friendly detail
+
+----------------------------------------------------------------------
+15.7.1 Arrays utility class
+----------------------------------------------------------------------
+
+Most used methods:
+- Method: Arrays.sort(arr)
+  Use: sort an array in ascending order
+  Example:
+  int[] arr = {5, 2, 9, 1};
+  Arrays.sort(arr);
+  // arr = [1, 2, 5, 9]
+
+- Method: Arrays.parallelSort(arr)
+  Use: sort very large arrays using parallelism
+  Example:
+  Arrays.parallelSort(arr);
+  Note: usually not needed for beginner DSA questions
+
+- Method: Arrays.binarySearch(arr, key)
+  Use: search in a sorted array
+  Example:
+  int pos = Arrays.binarySearch(arr, 5);
+  Note: sort first, otherwise result is unreliable
+
+- Method: Arrays.fill(arr, value)
+  Use: set every element to one value
+  Example:
+  int[] dist = new int[5];
+  Arrays.fill(dist, -1);
+
+- Method: Arrays.copyOf(arr, newLength)
+  Use: resize or clone an array
+  Example:
+  int[] bigger = Arrays.copyOf(arr, 10);
+
+- Method: Arrays.copyOfRange(arr, from, to)
+  Use: copy part of an array
+  Example:
+  int[] sub = Arrays.copyOfRange(arr, 1, 3);
+
+- Method: Arrays.equals(a, b)
+  Use: compare arrays by content
+  Example:
+  boolean same = Arrays.equals(a, b);
+
+- Method: Arrays.toString(arr)
+  Use: print 1D arrays
+  Example:
+  System.out.println(Arrays.toString(arr));
+
+- Method: Arrays.deepToString(arr2d)
+  Use: print 2D arrays
+  Example:
+  System.out.println(Arrays.deepToString(matrix));
+
+- Method: Arrays.stream(arr)
+  Use: create a stream from an array
+  Example:
+  int sum = Arrays.stream(arr).sum();
+
+Mini pattern:
+int[] arr = {8, 3, 7, 2};
+Arrays.sort(arr);
+int idx = Arrays.binarySearch(arr, 7);
+System.out.println(Arrays.toString(arr));
+
+----------------------------------------------------------------------
+15.7.2 Collections utility class
+----------------------------------------------------------------------
+
+Most used methods:
+- Method: Collections.sort(list)
+  Use: sort a list in ascending order
+  Example:
+  Collections.sort(list);
+
+- Method: Collections.reverse(list)
+  Use: reverse list order
+  Example:
+  Collections.reverse(list);
+
+- Method: Collections.shuffle(list)
+  Use: randomize order
+  Example:
+  Collections.shuffle(list);
+
+- Method: Collections.swap(list, i, j)
+  Use: swap two list elements
+  Example:
+  Collections.swap(list, 0, 2);
+
+- Method: Collections.min(collection)
+  Use: get minimum element
+  Example:
+  int mn = Collections.min(list);
+
+- Method: Collections.max(collection)
+  Use: get maximum element
+  Example:
+  int mx = Collections.max(list);
+
+- Method: Collections.frequency(collection, x)
+  Use: count occurrences
+  Example:
+  int cnt = Collections.frequency(list, 10);
+
+- Method: Collections.binarySearch(list, key)
+  Use: binary search on sorted list
+  Example:
+  int pos = Collections.binarySearch(list, 20);
+
+- Method: Collections.fill(list, value)
+  Use: overwrite every position
+  Example:
+  Collections.fill(list, 0);
+  Note: list must already have that size
+
+Mini pattern:
+ArrayList<Integer> list = new ArrayList<>(Arrays.asList(4, 1, 9, 1));
+Collections.sort(list);
+Collections.reverse(list);
+System.out.println(list);
+
+----------------------------------------------------------------------
+15.7.3 String methods
+----------------------------------------------------------------------
+
+Most used methods:
+- Method: s.length()
+  Use: get string length
+  Example:
+  int n = s.length();
+
+- Method: s.charAt(i)
+  Use: access one character
+  Example:
+  char ch = s.charAt(0);
+
+- Method: s.substring(begin, end)
+  Use: extract part of string
+  Example:
+  String part = s.substring(1, 4);
+
+- Method: s.indexOf(x)
+  Use: first occurrence of char/string
+  Example:
+  int pos = s.indexOf('a');
+
+- Method: s.lastIndexOf(x)
+  Use: last occurrence
+  Example:
+  int pos = s.lastIndexOf("ab");
+
+- Method: s.contains(x)
+  Use: substring check
+  Example:
+  boolean ok = s.contains("cat");
+
+- Method: s.startsWith(prefix)
+  Use: prefix check
+  Example:
+  if (word.startsWith("pre")) { }
+
+- Method: s.endsWith(suffix)
+  Use: suffix check
+  Example:
+  if (file.endsWith(".txt")) { }
+
+- Method: s.equals(other)
+  Use: compare string values
+  Example:
+  if (a.equals(b)) { }
+  Note: do not use `==` for string content comparison
+
+- Method: s.equalsIgnoreCase(other)
+  Use: case-insensitive comparison
+  Example:
+  boolean same = a.equalsIgnoreCase(b);
+
+- Method: s.compareTo(other)
+  Use: lexicographic comparison
+  Example:
+  words.sort(String::compareTo);
+
+- Method: s.toLowerCase(), s.toUpperCase()
+  Use: normalize casing
+  Example:
+  s = s.toLowerCase();
+
+- Method: s.trim(), s.strip()
+  Use: remove outer whitespace
+  Example:
+  s = s.trim();
+
+- Method: s.replace(old, new)
+  Use: replace characters or substring
+  Example:
+  s = s.replace('a', 'x');
+
+- Method: s.replaceAll(regex, replacement)
+  Use: regex-based replace
+  Example:
+  s = s.replaceAll("\\\\s+", "");
+  Note: this uses regex, so it is different from replace
+
+- Method: s.split(regex)
+  Use: split string by pattern
+  Example:
+  String[] parts = s.split(",");
+
+- Method: s.toCharArray()
+  Use: convert string to char array
+  Example:
+  char[] chars = s.toCharArray();
+
+- Method: String.valueOf(x)
+  Use: convert primitive/object to string
+  Example:
+  String num = String.valueOf(123);
+
+- Method: String.join(delimiter, values)
+  Use: join multiple strings
+  Example:
+  String line = String.join("-", "a", "b", "c");
+
+- Method: s.isEmpty()
+  Use: check empty string
+  Example:
+  if (s.isEmpty()) { }
+
+- Method: s.repeat(k)
+  Use: repeat a string multiple times
+  Example:
+  String border = "=".repeat(20);
+
+Mini pattern:
+String s = "  level  ";
+s = s.trim();
+boolean palindromeCheck = s.equals(new StringBuilder(s).reverse().toString());
+
+----------------------------------------------------------------------
+15.7.4 StringBuilder methods
+----------------------------------------------------------------------
+
+Use StringBuilder when many string changes are needed.
+
+Most used methods:
+- Method: append(x)
+  Use: add content at end
+  Example:
+  sb.append(10).append(" ");
+
+- Method: insert(index, x)
+  Use: insert in middle
+  Example:
+  sb.insert(0, "start ");
+
+- Method: delete(start, end)
+  Use: remove substring
+  Example:
+  sb.delete(2, 5);
+
+- Method: deleteCharAt(index)
+  Use: remove one character
+  Example:
+  sb.deleteCharAt(0);
+
+- Method: reverse()
+  Use: reverse current content
+  Example:
+  sb.reverse();
+
+- Method: setCharAt(index, ch)
+  Use: modify one character
+  Example:
+  sb.setCharAt(1, 'Z');
+
+- Method: charAt(index)
+  Use: read a character
+  Example:
+  char c = sb.charAt(0);
+
+- Method: length()
+  Use: current length
+  Example:
+  int len = sb.length();
+
+- Method: setLength(n)
+  Use: trim or extend builder
+  Example:
+  sb.setLength(0);
+  Note: handy to clear builder
+
+- Method: toString()
+  Use: convert to String
+  Example:
+  String ans = sb.toString();
+
+Mini pattern:
+StringBuilder sb = new StringBuilder();
+for (int x : arr) {
+    sb.append(x).append(" ");
+}
+String output = sb.toString().trim();
+
+----------------------------------------------------------------------
+15.7.5 ArrayList and List methods
+----------------------------------------------------------------------
+
+Use ArrayList for dynamic indexed storage.
+
+Most used methods:
+- Method: add(x)
+  Use: append element
+  Example:
+  list.add(10);
+
+- Method: add(index, x)
+  Use: insert at index
+  Example:
+  list.add(1, 99);
+
+- Method: get(index)
+  Use: fetch element
+  Example:
+  int val = list.get(0);
+
+- Method: set(index, x)
+  Use: update element
+  Example:
+  list.set(0, 50);
+
+- Method: remove(index)
+  Use: remove by position
+  Example:
+  list.remove(2);
+
+- Method: remove(Integer.valueOf(x))
+  Use: remove by value
+  Example:
+  list.remove(Integer.valueOf(10));
+  Note: important because `remove(10)` means index 10 for Integer lists
+
+- Method: size()
+  Use: number of elements
+  Example:
+  int n = list.size();
+
+- Method: isEmpty()
+  Use: empty check
+  Example:
+  if (list.isEmpty()) { }
+
+- Method: contains(x)
+  Use: membership test
+  Example:
+  boolean ok = list.contains(7);
+
+- Method: clear()
+  Use: remove all elements
+  Example:
+  list.clear();
+
+- Method: indexOf(x), lastIndexOf(x)
+  Use: find first/last position
+  Example:
+  int first = list.indexOf(5);
+
+- Method: subList(l, r)
+  Use: get a view of a subrange
+  Example:
+  List<Integer> part = list.subList(1, 4);
+  Note: end index is excluded
+
+- Method: toArray()
+  Use: convert to object array
+  Example:
+  Object[] arrObj = list.toArray();
+
+- Method: sort(comparator)
+  Use: custom sort
+  Example:
+  list.sort((a, b) -> Integer.compare(a, b));
+
+Mini pattern:
+ArrayList<Integer> list = new ArrayList<>();
+list.add(10);
+list.add(20);
+list.add(30);
+list.remove(Integer.valueOf(20));
+System.out.println(list.get(0));
+
+List interface methods you should know:
+- add(x)
+- add(index, x)
+- get(index)
+- set(index, x)
+- remove(index)
+- contains(x)
+- size()
+- isEmpty()
+- iterator()
+- forEach(...)
+
+----------------------------------------------------------------------
+15.7.6 LinkedList methods
+----------------------------------------------------------------------
+
+LinkedList supports both List-style and Deque-style operations.
+
+Most used methods:
+- Method: addFirst(x), addLast(x)
+  Use: insert at ends
+  Example:
+  list.addFirst(10);
+  list.addLast(20);
+
+- Method: getFirst(), getLast()
+  Use: read ends without removing
+  Example:
+  int a = list.getFirst();
+
+- Method: removeFirst(), removeLast()
+  Use: remove from ends
+  Example:
+  list.removeFirst();
+
+- Method: offer(x), offerFirst(x), offerLast(x)
+  Use: queue/deque insertion
+  Example:
+  list.offerLast(50);
+
+- Method: peek(), peekFirst(), peekLast()
+  Use: safe read without removal
+  Example:
+  Integer first = list.peekFirst();
+
+- Method: poll(), pollFirst(), pollLast()
+  Use: safe remove and return
+  Example:
+  Integer removed = list.pollFirst();
+
+Mini pattern:
+LinkedList<Integer> list = new LinkedList<>();
+list.addFirst(5);
+list.addLast(10);
+System.out.println(list.peekFirst());
+System.out.println(list.pollLast());
+
+----------------------------------------------------------------------
+15.7.7 Queue, Deque, and ArrayDeque methods
+----------------------------------------------------------------------
+
+Queue methods:
+- Method: offer(x)
+  Use: insert element
+  Example:
+  q.offer(10);
+
+- Method: poll()
+  Use: remove front safely
+  Example:
+  Integer x = q.poll();
+
+- Method: peek()
+  Use: see front safely
+  Example:
+  Integer front = q.peek();
+
+- Method: add(x), remove(), element()
+  Use: queue methods that may throw exceptions
+  Example:
+  q.add(5);
+  Note: prefer `offer`, `poll`, `peek` in DSA practice
+
+Deque methods:
+- Method: addFirst(x), addLast(x)
+  Use: insert at either end
+
+- Method: offerFirst(x), offerLast(x)
+  Use: safe end insertion
+
+- Method: removeFirst(), removeLast()
+  Use: remove from either end
+
+- Method: pollFirst(), pollLast()
+  Use: safe end removal
+
+- Method: getFirst(), getLast()
+  Use: read ends
+
+- Method: peekFirst(), peekLast()
+  Use: safe read at ends
+
+- Method: push(x), pop(), peek()
+  Use: stack view on deque
+
+ArrayDeque common usage as stack:
+Deque<Integer> st = new ArrayDeque<>();
+st.push(10);
+st.push(20);
+int top = st.pop();
+Integer now = st.peek();
+
+ArrayDeque common usage as queue:
+Queue<Integer> q = new ArrayDeque<>();
+q.offer(10);
+q.offer(20);
+int first = q.poll();
+Integer next = q.peek();
+
+When to prefer ArrayDeque:
+- stack implementation in Java
+- queue implementation in Java
+- faster and cleaner than legacy Stack in most cases
+
+----------------------------------------------------------------------
+15.7.8 PriorityQueue methods
+----------------------------------------------------------------------
+
+Use PriorityQueue for heap behavior.
+
+Most used methods:
+- Method: offer(x), add(x)
+  Use: insert element
+  Example:
+  pq.offer(7);
+
+- Method: peek()
+  Use: see smallest element in min-heap
+  Example:
+  int smallest = pq.peek();
+
+- Method: poll()
+  Use: remove smallest element
+  Example:
+  int removed = pq.poll();
+
+- Method: size(), isEmpty(), clear()
+  Use: heap management
+
+- Method: contains(x)
+  Use: membership test
+  Note: valid, but not the usual reason to use a heap
+
+Min-heap example:
+PriorityQueue<Integer> pq = new PriorityQueue<>();
+pq.offer(5);
+pq.offer(1);
+pq.offer(9);
+System.out.println(pq.peek());
+System.out.println(pq.poll());
+
+Max-heap example:
+PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
+maxHeap.offer(5);
+maxHeap.offer(1);
+maxHeap.offer(9);
+
+Important note:
+- Iterating over a priority queue does not give fully sorted order.
+- Repeated `poll()` gives elements in heap order.
+
+----------------------------------------------------------------------
+15.7.9 HashMap and Map methods
+----------------------------------------------------------------------
+
+Use HashMap for average O(1) key-value lookup.
+
+Most used methods:
+- Method: put(key, value)
+  Use: insert or update
+  Example:
+  map.put("apple", 3);
+
+- Method: putIfAbsent(key, value)
+  Use: insert only if key is missing
+  Example:
+  map.putIfAbsent("apple", 0);
+
+- Method: get(key)
+  Use: fetch value
+  Example:
+  Integer val = map.get("apple");
+  Note: returns null if key is absent
+
+- Method: getOrDefault(key, defaultValue)
+  Use: safe read with fallback
+  Example:
+  int cnt = map.getOrDefault("banana", 0);
+
+- Method: containsKey(key)
+  Use: check if key exists
+  Example:
+  if (map.containsKey("apple")) { }
+
+- Method: remove(key)
+  Use: delete key
+  Example:
+  map.remove("apple");
+
+- Method: replace(key, value)
+  Use: update existing key
+  Example:
+  map.replace("x", 20);
+
+- Method: keySet(), values(), entrySet()
+  Use: iterate over keys, values, or entries
+  Example:
+  for (Map.Entry<String, Integer> e : map.entrySet()) {
+      System.out.println(e.getKey() + " " + e.getValue());
+  }
+
+- Method: merge(key, value, fn)
+  Use: concise accumulation logic
+  Example:
+  map.merge("a", 1, Integer::sum);
+
+- Method: computeIfAbsent(key, fn)
+  Use: create nested structure if missing
+  Example:
+  graph.computeIfAbsent(u, k -> new ArrayList<>()).add(v);
+
+Frequency-count pattern:
+HashMap<Character, Integer> freq = new HashMap<>();
+for (char c : s.toCharArray()) {
+    freq.put(c, freq.getOrDefault(c, 0) + 1);
+}
+
+Graph adjacency-list pattern:
+HashMap<Integer, ArrayList<Integer>> graph = new HashMap<>();
+graph.computeIfAbsent(1, k -> new ArrayList<>()).add(2);
+
+----------------------------------------------------------------------
+15.7.10 HashSet methods
+----------------------------------------------------------------------
+
+Use HashSet for average O(1) membership tests.
+
+Most used methods:
+- Method: add(x)
+  Use: insert unique value
+  Example:
+  set.add(10);
+
+- Method: contains(x)
+  Use: membership test
+  Example:
+  if (set.contains(10)) { }
+
+- Method: remove(x)
+  Use: delete value
+  Example:
+  set.remove(10);
+
+- Method: size(), isEmpty(), clear()
+  Use: set management
+
+Duplicate detection pattern:
+HashSet<Integer> seen = new HashSet<>();
+for (int x : arr) {
+    if (!seen.add(x)) {
+        System.out.println("duplicate = " + x);
+    }
+}
+
+LinkedHashMap / LinkedHashSet:
+- Same major methods as HashMap / HashSet
+- Keeps insertion order
+- Use when order matters and hashing speed is still desired
+
+----------------------------------------------------------------------
+15.7.11 TreeMap and TreeSet methods
+----------------------------------------------------------------------
+
+Use these when sorted order matters.
+
+TreeMap most used methods:
+- Method: put(key, value), get(key), remove(key), containsKey(key)
+  Use: normal map operations in sorted-key order
+
+- Method: firstKey(), lastKey()
+  Use: get smallest/largest key
+
+- Method: higherKey(key), lowerKey(key)
+  Use: strict next greater or next smaller key
+
+- Method: ceilingKey(key), floorKey(key)
+  Use: nearest key greater-or-equal / smaller-or-equal
+
+- Method: subMap(from, to), headMap(to), tailMap(from)
+  Use: range views
+
+- Method: pollFirstEntry(), pollLastEntry()
+  Use: remove smallest/largest entry
+
+TreeSet most used methods:
+- Method: add(x), remove(x), contains(x)
+  Use: sorted unique elements
+
+- Method: first(), last()
+  Use: smallest/largest value
+
+- Method: higher(x), lower(x), ceiling(x), floor(x)
+  Use: nearest ordered neighbors
+
+- Method: pollFirst(), pollLast()
+  Use: remove smallest/largest
+
+- Method: subSet(a, b), headSet(x), tailSet(x)
+  Use: ordered range views
+
+Example:
+TreeSet<Integer> ts = new TreeSet<>();
+ts.add(10);
+ts.add(30);
+ts.add(20);
+System.out.println(ts.ceiling(21));
+System.out.println(ts.floor(21));
+
+----------------------------------------------------------------------
+15.7.12 Comparator and Comparable
+----------------------------------------------------------------------
+
+Comparable:
+- Use when class should have one natural default ordering
+- Method: compareTo(other)
+
+Example:
+class Student implements Comparable<Student> {
+    int marks;
+    Student(int marks) {
+        this.marks = marks;
+    }
+    public int compareTo(Student other) {
+        return Integer.compare(this.marks, other.marks);
+    }
+}
+
+Comparator:
+- Use when you want custom ordering from outside the class
+- Common for sorting by age, marks, name length, descending order, etc.
+
+Example:
+students.sort((a, b) -> Integer.compare(a.marks, b.marks));
+
+Descending order example:
+students.sort((a, b) -> Integer.compare(b.marks, a.marks));
+
+PriorityQueue with comparator:
+PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> Integer.compare(a[1], b[1]));
+
+----------------------------------------------------------------------
+15.7.13 Common Math, Integer, Character helpers
+----------------------------------------------------------------------
+
+Useful Math methods:
+- Math.max(a, b)
+- Math.min(a, b)
+- Math.abs(x)
+- Math.sqrt(x)
+- Math.pow(a, b)
+- Math.ceil(x)
+- Math.floor(x)
+
+Examples:
+int mx = Math.max(10, 20);
+int diff = Math.abs(a - b);
+
+Useful parsing and character methods:
+- Integer.parseInt(s)
+- Long.parseLong(s)
+- Character.isDigit(c)
+- Character.isLetter(c)
+- Character.isLowerCase(c)
+- Character.isUpperCase(c)
+- Character.toLowerCase(c)
+- Character.toUpperCase(c)
+
+Examples:
+int num = Integer.parseInt("123");
+if (Character.isDigit('7')) { }
+
+15.8 Built-in recommendation shortcuts
+
+If you need indexed dynamic storage:
+- Use `ArrayList`
+
+If you need stack operations:
+- Use `ArrayDeque` with `push`, `pop`, `peek`
+
+If you need queue operations:
+- Use `ArrayDeque` with `offer`, `poll`, `peek`
+
+If you need smallest/largest quickly:
+- Use `PriorityQueue`
+
+If you need fast key-value lookup:
+- Use `HashMap`
+
+If you need fast unique membership check:
+- Use `HashSet`
+
+If you need keys or values in sorted order:
+- Use `TreeMap` or `TreeSet`
+
+If you need insertion order preserved:
+- Use `LinkedHashMap` or `LinkedHashSet`
+
+If you need many string modifications:
+- Use `StringBuilder`
+
+If you need array helper operations:
+- Use `Arrays`
+
+If you need collection helper operations:
+- Use `Collections`
+
+15.9 Most used built-in patterns in DSA
+
+Pattern: frequency counting with map
+HashMap<Integer, Integer> freq = new HashMap<>();
+for (int x : arr) {
+    freq.put(x, freq.getOrDefault(x, 0) + 1);
+}
+
+Pattern: visited set
+HashSet<Integer> visited = new HashSet<>();
+visited.add(1);
+if (visited.contains(1)) { }
+
+Pattern: stack using ArrayDeque
+Deque<Integer> st = new ArrayDeque<>();
+st.push(10);
+st.push(20);
+while (!st.isEmpty()) {
+    System.out.println(st.pop());
+}
+
+Pattern: queue using ArrayDeque
+Queue<Integer> q = new ArrayDeque<>();
+q.offer(1);
+q.offer(2);
+while (!q.isEmpty()) {
+    System.out.println(q.poll());
+}
+
+Pattern: min-heap for top-k / smallest-first
+PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+minHeap.offer(4);
+minHeap.offer(1);
+minHeap.offer(7);
+
+Pattern: max-heap
+PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
+
+Pattern: sorting objects
+students.sort((a, b) -> Integer.compare(a.marks, b.marks));
+
+Pattern: sorted unique values
+TreeSet<Integer> sorted = new TreeSet<>();
+sorted.add(5);
+sorted.add(1);
+sorted.add(5);
+System.out.println(sorted);
+
+Pattern: build answer string efficiently
+StringBuilder ans = new StringBuilder();
+for (int x : arr) {
+    ans.append(x).append(" ");
+}
+System.out.println(ans.toString().trim());
+
+
+======================================================================
+16. CUSTOM IMPLEMENTATION GUIDELINES WITHOUT BUILT-IN CLASSES
+======================================================================
+
+When practicing manually, implement these from scratch:
+- stack using array
+- dynamic stack using resize logic
+- queue using circular array
+- linked list with custom Node class
+- BST with insert/search/delete
+- heap using array
+- hash table with bucket chaining
+- graph using array/list-of-lists structures
+
+Why do this?
+- strengthens problem-solving
+- teaches internal mechanics
+- helps in interviews and exams
+
+What to be careful about:
+- index bounds
+- overflow/underflow
+- null pointer handling
+- off-by-one errors
+- resizing logic
+- maintaining head/tail/front/rear correctly
+
+
+======================================================================
+17. FREQUENT INTERVIEW / EXAM PATTERNS
+======================================================================
+
+Arrays:
+- two pointers
+- sliding window
+- prefix sums
+- difference array
+
+Strings:
+- frequency count
+- hashing
+- KMP / pattern matching basics
+
+Linked List:
+- slow and fast pointers
+- reverse list
+- cycle detection
+- merge two lists
+
+Stack:
+- monotonic stack
+- nearest greater/smaller element
+- valid parentheses
+
+Queue:
+- BFS
+- monotonic deque
+
+Hashing:
+- duplicates
+- pair sum / two sum
+- counting
+
+Tree:
+- recursion
+- traversals
+- height/diameter
+- lowest common ancestor
+
+Graph:
+- BFS/DFS
+- topo sort
+- shortest path
+- DSU
+
+DP:
+- pick/not pick
+- subsequence/subarray
+- state transition tables
+
+17.1 Problem-solving framework
+
+When you see a new problem, ask:
+1. Is brute force possible, and what is its complexity?
+2. Can I reduce repeated work with hashing, prefix sums, or DP?
+3. Is the input sorted, or can sorting help?
+4. Does the problem ask for nearest greater/smaller, next/previous, or range max/min?
+5. Is the data naturally tree-like or graph-like?
+6. Do I need order, uniqueness, frequency, or priority?
+7. Can two pointers or sliding window reduce nested loops?
+
+Quick recognition guide:
+- Need fast lookup -> HashMap / HashSet
+- Need sorted order -> TreeMap / TreeSet / sorting
+- Need top smallest/largest -> PriorityQueue
+- Need nearest greater/smaller -> Monotonic stack
+- Need fixed/variable contiguous range -> Sliding window
+- Need repeated range sum -> Prefix sums / Fenwick / Segment tree
+- Need connected components -> DFS/BFS/DSU
+- Need all combinations -> Backtracking
+- Need best answer over overlapping states -> DP
+
+17.2 Prefix sums and difference arrays
+
+Prefix sum:
+- Store cumulative sums so range-sum queries become O(1)
+- Formula:
+  prefix[i] = prefix[i - 1] + arr[i]
+- Range sum l..r:
+  prefix[r] - prefix[l - 1]
+
+Example:
+int[] arr = {2, 4, 1, 7};
+int[] pre = new int[arr.length];
+pre[0] = arr[0];
+for (int i = 1; i < arr.length; i++) {
+    pre[i] = pre[i - 1] + arr[i];
+}
+
+Difference array:
+- Efficient for repeated range updates
+- Add value at l and subtract at r + 1, then rebuild with prefix sum
+
+17.3 Sliding window
+
+Use when:
+- problem asks about contiguous subarray or substring
+- need longest, shortest, or count over a moving range
+
+Two common forms:
+- fixed-size window
+- variable-size window
+
+Fixed window example:
+int k = 3;
+int sum = 0;
+for (int i = 0; i < k; i++) sum += arr[i];
+int best = sum;
+for (int i = k; i < arr.length; i++) {
+    sum += arr[i] - arr[i - k];
+    best = Math.max(best, sum);
+}
+
+Variable window idea:
+- expand right pointer
+- while condition breaks, move left pointer
+
+17.4 Two pointers
+
+Use when:
+- array/string is sorted
+- or you need to shrink/expand from ends
+- or you need in-place partitioning
+
+Examples:
+- pair sum in sorted array
+- remove duplicates
+- reverse array/string
+- merge intervals style scans
+
+Sorted pair sum example:
+int i = 0, j = arr.length - 1;
+while (i < j) {
+    int sum = arr[i] + arr[j];
+    if (sum == target) break;
+    if (sum < target) i++;
+    else j--;
+}
+
+17.5 Bit manipulation essentials
+
+Why important:
+- compact representation
+- subset tricks
+- parity and powers of two
+- often used in optimization problems
+
+Key operations:
+- check ith bit:
+  ((n >> i) & 1)
+- set ith bit:
+  n | (1 << i)
+- clear ith bit:
+  n & ~(1 << i)
+- toggle ith bit:
+  n ^ (1 << i)
+- remove lowest set bit:
+  n & (n - 1)
+- isolate lowest set bit:
+  n & -n
+
+Common facts:
+- n is power of two if:
+  n > 0 && (n & (n - 1)) == 0
+- XOR properties:
+  a ^ a = 0
+  a ^ 0 = a
+
+Examples:
+int n = 10; // 1010
+boolean bit1 = ((n >> 1) & 1) == 1;
+int set0 = n | 1;
+int cleared1 = n & ~(1 << 1);
+
+17.6 Monotonic stack and monotonic deque
+
+Monotonic stack:
+- stack kept increasing or decreasing
+- solves nearest greater/smaller efficiently
+
+Use cases:
+- next greater element
+- stock span
+- largest rectangle in histogram
+- daily temperatures
+
+Monotonic deque:
+- maintains window max/min
+- useful in sliding window maximum
+
+Pattern idea for next greater element:
+- scan from right
+- pop smaller or equal values
+- top becomes answer
+
+17.7 Interval problems
+
+Common tasks:
+- merge overlapping intervals
+- insert interval
+- meeting rooms
+- minimum platforms
+
+Standard approach:
+1. sort by start time
+2. compare current interval with last merged interval
+
+Example interval sort:
+intervals.sort((a, b) -> Integer.compare(a[0], b[0]));
+
+17.8 Advanced string algorithms
+
+KMP:
+- pattern matching in O(n + m)
+- uses LPS array
+- good when repeated substring search matters
+
+Rabin-Karp:
+- rolling hash
+- useful for substring search
+
+Z-algorithm:
+- builds Z-array for string matching and prefix pattern work
+
+Trie:
+- best for prefix search, dictionary, autocomplete
+
+17.9 Tree problem patterns
+
+Very common tree tasks:
+- height / max depth
+- size / node count
+- diameter
+- balance check
+- lowest common ancestor
+- path sum
+- serialize / deserialize
+- BST validation
+
+Typical techniques:
+- recursion with return values
+- DFS with global answer
+- BFS level order with queue
+
+17.10 Graph problem patterns
+
+Common graph task mapping:
+- connected components -> DFS/BFS
+- shortest path unweighted -> BFS
+- shortest path weighted non-negative -> Dijkstra
+- DAG dependency order -> Topological sort
+- cycle detection undirected -> DFS parent check / DSU
+- cycle detection directed -> DFS states / Kahn's algorithm
+- minimum spanning tree -> Kruskal / Prim
+
+Graph traversal checklist:
+- visited array/set
+- adjacency list
+- direction awareness
+- edge weights if present
+
+17.11 DP pattern categories
+
+Most common DP families:
+- 1D DP:
+  Fibonacci, climbing stairs, house robber
+- 2D DP:
+  LCS, edit distance, grid paths
+- knapsack DP:
+  pick/not pick
+- subsequence DP:
+  LIS, LCS variants
+- interval DP:
+  matrix chain multiplication
+- digit DP:
+  number constraints problems
+
+DP checklist:
+1. Define state
+2. Define transition
+3. Define base case
+4. Decide memoization or tabulation
+5. Try space optimization
+
+17.12 When not to overuse advanced DSA
+
+Do not jump to complex structures if:
+- one pass counting is enough
+- sorting + scan is enough
+- brute force passes within constraints
+
+Good engineering means choosing the simplest correct approach.
+
+
+======================================================================
+18. SAMPLE MINI IMPLEMENTATIONS
+======================================================================
+
+18.1 Reverse an array
+void reverse(int[] arr) {
+    int i = 0, j = arr.length - 1;
+    while (i < j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+        i++;
+        j--;
+    }
+}
+
+18.2 Reverse a linked list
+Node reverse(Node head) {
+    Node prev = null, cur = head;
+    while (cur != null) {
+        Node next = cur.next;
+        cur.next = prev;
+        prev = cur;
+        cur = next;
+    }
+    return prev;
+}
+
+18.3 Valid parentheses
+boolean isValid(String s) {
+    ArrayDeque<Character> st = new ArrayDeque<>();
+    for (char c : s.toCharArray()) {
+        if (c == '(' || c == '[' || c == '{') st.push(c);
+        else {
+            if (st.isEmpty()) return false;
+            char t = st.pop();
+            if ((c == ')' && t != '(') ||
+                (c == ']' && t != '[') ||
+                (c == '}' && t != '{')) {
+                return false;
+            }
+        }
+    }
+    return st.isEmpty();
+}
+
+18.4 BFS on graph
+void bfs(int start, List<List<Integer>> g) {
+    boolean[] vis = new boolean[g.size()];
+    Queue<Integer> q = new ArrayDeque<>();
+    q.offer(start);
+    vis[start] = true;
+
+    while (!q.isEmpty()) {
+        int node = q.poll();
+        System.out.print(node + " ");
+        for (int nei : g.get(node)) {
+            if (!vis[nei]) {
+                vis[nei] = true;
+                q.offer(nei);
+            }
+        }
+    }
+}
+
+18.5 Inorder traversal
+void inorder(TreeNode root) {
+    if (root == null) return;
+    inorder(root.left);
+    System.out.print(root.data + " ");
+    inorder(root.right);
+}
+
+
+======================================================================
+19. HOW TO CHOOSE THE RIGHT DATA STRUCTURE
+======================================================================
+
+If you need:
+- indexed access -> array / ArrayList
+- frequent head insertion/removal -> linked list / deque
+- LIFO -> stack / ArrayDeque
+- FIFO -> queue / ArrayDeque
+- smallest/largest quickly -> heap / PriorityQueue
+- fast key lookup -> HashMap / HashSet
+- sorted keys -> TreeMap / TreeSet
+- prefix search -> trie
+- hierarchical data -> tree
+- connectivity and traversal -> graph
+- repeated range queries -> segment tree / Fenwick tree
+
+
+======================================================================
+20. COMMON MISTAKES IN JAVA DSA
+======================================================================
+
+- Initializing arrays before size/capacity is assigned
+- Using `==` instead of `.equals()` for object value comparison
+- Forgetting generic types:
+  - ArrayList<Integer> not ArrayList
+- Confusing `remove(index)` and `remove(object)` in lists
+- Using `Stack` instead of `ArrayDeque` for new stack code
+- Forgetting PriorityQueue is min-heap by default
+- Assuming HashMap iteration order is fixed
+- Writing recursion without strong base cases
+- Ignoring integer overflow in midpoint calculation
+  - use `mid = lo + (hi - lo) / 2`
+- Forgetting modulo wrap-around in circular queue
+
+
+======================================================================
+21. STUDY ROADMAP
+======================================================================
+
+Beginner order:
+1. Complexity analysis
+2. Arrays and strings
+3. Recursion
+4. Linked list
+5. Stack and queue
+6. Hashing
+7. Trees and BST
+8. Heap
+9. Graph BFS/DFS
+10. Sorting and binary search
+11. Greedy
+12. Dynamic programming
+13. Trie, DSU, segment tree
+
+Practice cycle:
+1. Learn theory
+2. Implement without built-ins
+3. Solve easy problems
+4. Re-implement using Java built-ins
+5. Compare complexity and readability
+
+
+======================================================================
+22. QUICK COMPLEXITY TABLE
+======================================================================
+
+Array:
+- access O(1), search O(n), insert/delete middle O(n)
+
+ArrayList:
+- get O(1), add end amortized O(1), insert/delete middle O(n)
+
+LinkedList:
+- access O(n), insert/delete near known node O(1)
+
+Stack:
+- push/pop/peek O(1)
+
+Queue:
+- enqueue/dequeue O(1)
+
+HashMap/HashSet:
+- average insert/search/delete O(1), worst O(n)
+
+TreeMap/TreeSet:
+- insert/search/delete O(log n)
+
+BST:
+- average O(log n), worst O(n)
+
+Heap / PriorityQueue:
+- insert O(log n), peek O(1), poll O(log n)
+
+Graph BFS/DFS:
+- O(V + E)
+
+Binary Search:
+- O(log n)
+
+Merge Sort:
+- O(n log n)
+
+Quick Sort:
+- average O(n log n), worst O(n^2)
+
+
+======================================================================
+23. REFERENCES USED FOR THIS NOTE
+======================================================================
+
+This note combines standard DSA knowledge with Java API references and
+widely taught algorithmic conventions. The Java-specific built-in class
+guidance is aligned with official Oracle documentation.
+
+Useful official references:
+- Java Collections Framework overview:
+  https://docs.oracle.com/javase/tutorial/collections/intro/index.html
+- ArrayDeque:
+  https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/ArrayDeque.html
+- PriorityQueue:
+  https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/PriorityQueue.html
+- ArrayList:
+  https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/ArrayList.html
+- Arrays:
+  https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Arrays.html
+- Collections:
+  https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collections.html
+- HashMap:
+  https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/HashMap.html
+- HashSet:
+  https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/HashSet.html
+- TreeMap:
+  https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/TreeMap.html
+- TreeSet:
+  https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/TreeSet.html
+- LinkedList:
+  https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/LinkedList.html
+- String:
+  https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html
+- StringBuilder:
+  https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/StringBuilder.html
+- Comparator:
+  https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Comparator.html
+
+Notes:
+- Time complexities in this note are the standard textbook expectations for
+  the named data structures and algorithms.
+- Actual runtime also depends on implementation details, constants, JVM, and
+  input characteristics.
+
+
+======================================================================
+24. FINAL ADVICE
+======================================================================
+
+- Learn the idea first, then memorize syntax.
+- Practice writing data structures without built-ins.
+- After that, learn the Java built-ins you would use in real code.
+- In interviews and exams, always mention:
+  - chosen data structure
+  - time complexity
+  - space complexity
+  - why it fits the problem
+
+End of cheat note.
