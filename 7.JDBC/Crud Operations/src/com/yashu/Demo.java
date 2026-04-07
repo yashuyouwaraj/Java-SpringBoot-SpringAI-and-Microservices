@@ -1,39 +1,57 @@
 package com.yashu;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.yashu.util.JavaUtil;
 
 public class Demo {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
+        Connection connect = null;
+        PreparedStatement updateStatement = null;
+        PreparedStatement checkStatement = null;
+        ResultSet resultSet = null;
 
-        // Load and register the MySQL JDBC driver.
-        Class.forName("com.mysql.cj.jdbc.Driver");
+        try {
+            connect = JavaUtil.getConnection();
 
-        //Establish the connection
-        String url = "jdbc:mysql://localhost:3306/jdbclearning";
-        String user = "root";
-        String password = "Root@1234";
-        Connection connect = DriverManager.getConnection(url, user, password);
+            int studentId = 2;
+            int newAge = 18;
 
-        //creating statement
-        Statement statement = connect.createStatement();
+            String updateSql = "UPDATE studentinfo SET sage = ? WHERE id = ?";
+            updateStatement = connect.prepareStatement(updateSql);
+            updateStatement.setInt(1, newAge);
+            updateStatement.setInt(2, studentId);
 
-        //execute query
-        String sql = "UPDATE studentinfo set sage=18 where id=2";
-        int rowsCount = statement.executeUpdate(sql);
+            int rowsCount = updateStatement.executeUpdate();
+            if (rowsCount > 0) {
+                System.out.println("Update successful!");
+                return;
+            }
 
-        //process the result
-        if (rowsCount == 0) {
-            System.out.println("Updation failed");
-        } else {
-            System.out.println("Update successful!");
+            String checkSql = "SELECT sage FROM studentinfo WHERE id = ?";
+            checkStatement = connect.prepareStatement(checkSql);
+            checkStatement.setInt(1, studentId);
+            resultSet = checkStatement.executeQuery();
+
+            if (resultSet.next()) {
+                int currentAge = resultSet.getInt("sage");
+                if (currentAge == newAge) {
+                    System.out.println("No update needed. The age is already " + newAge + ".");
+                } else {
+                    System.out.println("Update failed even though the record exists.");
+                }
+            } else {
+                System.out.println("Update failed. No student found with id = " + studentId + ".");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JavaUtil.closeConnection(resultSet, checkStatement, updateStatement, connect);
         }
-
-        //close the resorces
-        statement.close();
-        connect.close();
     }
 
 }

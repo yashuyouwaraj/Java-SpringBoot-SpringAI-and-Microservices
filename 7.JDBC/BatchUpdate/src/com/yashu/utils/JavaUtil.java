@@ -1,4 +1,4 @@
-package com.yashu.util;
+package com.yashu.utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
