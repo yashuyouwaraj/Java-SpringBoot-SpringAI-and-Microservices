@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/secondApp")
 public class LoginServlet extends HttpServlet {
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protectedRegister(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         // Get form data
