@@ -1,0 +1,12 @@
+2026-04-19 20:44:10,589: com.yashu.SpringbootLog4j2.SpringbootLog4j2Application : INFO --> Starting SpringbootLog4j2Application using Java 22.0.1 with PID 15440 (D:\Full Stack\Practice\Java, Spring, and Microservices\20.Logging in Java Using Log4j\SpringbootLog4j2\target\classes started by AMANY in D:\Full Stack\Practice\Java, Spring, and Microservices\20.Logging in Java Using Log4j\SpringbootLog4j2) : logStarting : 
+2026-04-19 20:44:10,594: com.yashu.SpringbootLog4j2.SpringbootLog4j2Application : INFO --> No active profile set, falling back to 1 default profile: "default" : logStartupProfileInfo : 
+2026-04-19 20:44:11,517: org.springframework.boot.tomcat.TomcatWebServer : INFO --> Tomcat initialized with port 8080 (http) : initialize : 
+2026-04-19 20:44:11,531: org.apache.catalina.core.StandardService : INFO --> Starting service [Tomcat] : log : 
+2026-04-19 20:44:11,532: org.apache.catalina.core.StandardEngine : INFO --> Starting Servlet engine: [Apache Tomcat/11.0.20] : log : 
+2026-04-19 20:44:11,576: org.springframework.boot.web.context.servlet.WebApplicationContextInitializer : INFO --> Root WebApplicationContext: initialization completed in 932 ms : prepareWebApplicationContext : 
+2026-04-19 20:44:11,944: org.springframework.boot.tomcat.TomcatWebServer : INFO --> Tomcat started on port 8080 (http) with context path '/' : start : 
+2026-04-19 20:44:11,950: com.yashu.SpringbootLog4j2.SpringbootLog4j2Application : INFO --> Started SpringbootLog4j2Application in 1.901 seconds (process running for 2.324) : logStarted : 
+2026-04-19 20:44:20,169: org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] : INFO --> Initializing Spring DispatcherServlet 'dispatcherServlet' : log : 
+2026-04-19 20:44:20,170: org.springframework.web.servlet.DispatcherServlet : INFO --> Initializing Servlet 'dispatcherServlet' : initServletBean : 
+2026-04-19 20:44:20,172: org.springframework.web.servlet.DispatcherServlet : INFO --> Completed initialization in 2 ms : initServletBean : 
+2026-04-19 20:44:20,210: com.yashu.SpringbootLog4j2.Controller.GreetingsController : INFO --> Control in api1 : generateGreetings : 
