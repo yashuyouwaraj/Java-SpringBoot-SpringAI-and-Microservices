@@ -2,6 +2,7 @@ package com.yashu.joblisting.controller;
 
 import com.yashu.joblisting.model.Post;
 import com.yashu.joblisting.repository.PostRepository;
+import com.yashu.joblisting.repository.SearchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
@@ -16,6 +17,9 @@ public class PostController {
     @Autowired
     PostRepository repo;
 
+    @Autowired
+    SearchRepository srepo;
+
     @ApiIgnore
     @RequestMapping(value = "/")
     public void redirect(HttpServletResponse response) throws IOException {
@@ -26,6 +30,12 @@ public class PostController {
     @CrossOrigin
     public List<Post> getAllPosts(){
         return repo.findAll();
+    }
+
+    @GetMapping("/posts/{text}")
+    @CrossOrigin
+    public List<Post> search(@PathVariable String text){
+        return srepo.findByText(text);
     }
 
     @PostMapping("/post")
