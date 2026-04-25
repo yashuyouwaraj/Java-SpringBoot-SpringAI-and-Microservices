@@ -1,9 +1,9 @@
-package com.telusko.springbootrest.repo;
+package com.yashu.springbootrest.repo;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.telusko.springbootrest.model.JobPost;
+import com.yashu.springbootrest.model.JobPost;
 
 
 @Repository

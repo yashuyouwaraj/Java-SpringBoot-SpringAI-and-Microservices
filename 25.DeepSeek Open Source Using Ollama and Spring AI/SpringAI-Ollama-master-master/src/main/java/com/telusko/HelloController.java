@@ -1,4 +1,4 @@
-package com.telusko;
+package com.yashu;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.http.ResponseEntity;

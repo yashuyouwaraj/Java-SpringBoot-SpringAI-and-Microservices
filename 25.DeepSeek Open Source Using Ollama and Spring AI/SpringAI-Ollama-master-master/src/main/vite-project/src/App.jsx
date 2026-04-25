@@ -34,7 +34,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1>Telusko AI Chat</h1>
+      <h1>yashu AI Chat</h1>
       
       <form onSubmit={handleSubmit} className="chat-form">
         <input

@@ -1,4 +1,4 @@
-package com.telusko.springbootrest;
+package com.yashu.springbootrest;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

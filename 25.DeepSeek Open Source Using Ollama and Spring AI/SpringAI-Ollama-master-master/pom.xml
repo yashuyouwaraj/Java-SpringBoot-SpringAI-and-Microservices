@@ -8,7 +8,7 @@
         <version>3.4.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.telusko</groupId>
+    <groupId>com.yashu</groupId>
     <artifactId>SpringAI-Ollama</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>SpringAI-Ollama</name>

@@ -1,4 +1,4 @@
-package com.telusko.springbootrest.controller;
+package com.yashu.springbootrest.controller;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.telusko.springbootrest.model.JobPost;
-import com.telusko.springbootrest.service.JobService;
+import com.yashu.springbootrest.model.JobPost;
+import com.yashu.springbootrest.service.JobService;
 
 @RestController
 @CrossOrigin

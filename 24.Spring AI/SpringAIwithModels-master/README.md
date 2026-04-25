@@ -87,5 +87,5 @@ SpringAIDemo/
 ## Contact
 
 For any questions or feedback, please check out:
-- YouTube Channel: [Telusko](https://youtube.com/Telusko)
+- YouTube Channel: [yashu](https://youtube.com/yashu)
 - GitHub: [navinreddy20/SpringAIwithModels](https://github.com/navinreddy20/SpringAIwithModels)
